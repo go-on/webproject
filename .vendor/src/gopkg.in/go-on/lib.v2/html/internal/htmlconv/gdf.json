@@ -1,0 +1,13 @@
+{
+  "Exports": {
+    "Lex": "func (string,string,chan bool)(*lexer,chan item)",
+    "Parser": "type Parser struct {StripPrefixes bool; TrimSpace bool}",
+    "Parser.Parse": "(Parser) Parse(string) Stringer",
+    "Stringer": "type Stringer interface {String() string}",
+    "init": ""
+  },
+  "Imports": {
+    "github.com/go-on/html/tag.init": "07b317226bb7ddce97acefdef572f995"
+  },
+  "Path": "github.com/go-on/html/htmlconv"
+}

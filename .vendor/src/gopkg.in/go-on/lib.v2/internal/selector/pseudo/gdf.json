@@ -1,0 +1,33 @@
+{
+  "Exports": {
+    "Active": "func () pseudo",
+    "After": "func () pseudo",
+    "Before": "func () pseudo",
+    "Checked": "func () pseudo",
+    "Disabled": "func () pseudo",
+    "Empty": "func () pseudo",
+    "Enabled": "func () pseudo",
+    "FirstChild": "func () pseudo",
+    "FirstLetter": "func () pseudo",
+    "FirstLine": "func () pseudo",
+    "FirstOfType": "func () pseudo",
+    "Focus": "func () pseudo",
+    "Hover": "func () pseudo",
+    "Lang": "func (string) pseudo",
+    "LastChild": "func () pseudo",
+    "LastOfType": "func () pseudo",
+    "Link": "func () pseudo",
+    "Not": "func (selecter) pseudo",
+    "NthChild": "func (int) pseudo",
+    "NthLastChild": "func (int) pseudo",
+    "NthOfType": "func (int) pseudo",
+    "OnlyChild": "func () pseudo",
+    "OnlyOfType": "func () pseudo",
+    "Root": "func () pseudo",
+    "Target": "func () pseudo",
+    "Visited": "func () pseudo",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/selector/pseudo"
+}

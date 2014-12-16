@@ -1,0 +1,14 @@
+{
+  "Exports": {
+    "BeginsWith": "func (string,string) attrMatcher",
+    "Contains": "func (string,string) attrMatcher",
+    "EndsWith": "func (string,string) attrMatcher",
+    "Equals": "func (string,string) attrMatcher",
+    "Exists": "func (string) attrMatcher",
+    "HyphenBeginsWith": "func (string,string) attrMatcher",
+    "Includes": "func (string,string) attrMatcher",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/selector/attmatch"
+}

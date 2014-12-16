@@ -1,0 +1,29 @@
+{
+  "Exports": {
+    "*Setter.Bytes": "(*Setter) Bytes() []byte",
+    "*Setter.ServeHTTP": "(*Setter) ServeHTTP(net/http.ResponseWriter,*net/http.Request)",
+    "*Setter.SetBytes": "(*Setter) SetBytes(Placeholder,[]byte)",
+    "*Setter.SetString": "(*Setter) SetString(Placeholder,string)",
+    "*Setter.String": "(*Setter) String() string",
+    "*Template.NewHandler": "(*Template) NewHandler(map[string]net/http.Handler) net/http.Handler",
+    "*Template.NewSetter": "(*Template) NewSetter() *Setter",
+    "*Template.Placeholders": "(*Template) Placeholders() []Placeholder",
+    "*Template.ReplaceBytes": "(*Template) ReplaceBytes(map[Placeholder][]byte) []byte",
+    "*Template.ReplaceStrings": "(*Template) ReplaceStrings(map[Placeholder]string) []byte",
+    "BytesMap": "func (map[string][]byte) map[Placeholder][]byte",
+    "MapHandlers": "func (...interface{}) map[string]net/http.Handler",
+    "MapStrings": "func (...string) map[Placeholder]string",
+    "NewTemplateBytes": "func ([]byte) *Template",
+    "NewTemplateString": "func (string) *Template",
+    "P": "func (string) Placeholder",
+    "Placeholder": "type Placeholder string",
+    "Placeholder.Name": "(Placeholder) Name() string",
+    "Placeholder.String": "(Placeholder) String() string",
+    "Setter": "type Setter struct{}",
+    "StringsMap": "func (map[string]string) map[Placeholder]string",
+    "Template": "type Template struct{}",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/replacer"
+}

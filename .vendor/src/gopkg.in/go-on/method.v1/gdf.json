@@ -1,0 +1,23 @@
+{
+  "Exports": {
+    "ALL": "GET | POST | PUT | DELETE | PATCH | OPTIONS | HEAD | TRACE",
+    "DELETE": "const Method 1 \u003c\u003c iota",
+    "GET": "const Method 1 \u003c\u003c iota",
+    "HEAD": "const Method 1 \u003c\u003c iota",
+    "Method": "type Method int",
+    "Method.EmptyBody": "(Method) EmptyBody() bool",
+    "Method.IsIdempotent": "(Method) IsIdempotent() bool",
+    "Method.IsResponseCacheable": "(Method) IsResponseCacheable() bool",
+    "Method.IsSafe": "(Method) IsSafe() bool",
+    "Method.String": "(Method) String() string",
+    "OPTIONS": "const Method 1 \u003c\u003c iota",
+    "PATCH": "const Method 1 \u003c\u003c iota",
+    "POST": "const Method 1 \u003c\u003c iota",
+    "PUT": "const Method 1 \u003c\u003c iota",
+    "StringToMethod": "map[string]Method{\n\u0009\"POST\":\u0009POST,\n\u0009\"GET\":\u0009GET,\n\u0009\"PUT\":\u0009PUT,\n\u0009\"DELETE\":\u0009DELETE,\n\u0009\"PATCH\":\u0009PATCH,\n\u0009\"OPTIONS\":\u0009OPTIONS,\n\u0009\"HEAD\":\u0009HEAD,\n\u0009\"TRACE\":\u0009TRACE,\n}",
+    "TRACE": "const Method 1 \u003c\u003c iota",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/method"
+}

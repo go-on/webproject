@@ -1,0 +1,21 @@
+{
+  "Exports": {
+    "NewDynamic": "func (RequestMenu,int,github.com/go-on/menu.WriterTo) net/http.Handler",
+    "NewDynamicSub": "func (RequestMenu,int,int,github.com/go-on/menu.WriterTo) net/http.Handler",
+    "NewStatic": "func (*github.com/go-on/menu.Node,int,github.com/go-on/menu.WriterTo) net/http.Handler",
+    "NewStaticSub": "func (*github.com/go-on/menu.Node,int,int,github.com/go-on/menu.WriterTo) net/http.Handler",
+    "RequestMenu": "type RequestMenu interface {Menu(*net/http.Request) *github.com/go-on/menu.Node}",
+    "init": ""
+  },
+  "Imports": {
+    "github.com/go-on/menu.*Node.FindByPath": "(*Node) FindByPath(string) *Node",
+    "github.com/go-on/menu.*Node.FindByText": "(*Node) FindByText(string) *Node",
+    "github.com/go-on/menu.*Node.MarshalJSON": "(*Node) MarshalJSON()([]byte,error)",
+    "github.com/go-on/menu.*Node.RootAt": "(*Node) RootAt(int,string) *Node",
+    "github.com/go-on/menu.*Node.UnmarshalJSON": "(*Node) UnmarshalJSON([]byte) error",
+    "github.com/go-on/menu.Node": "type Node struct {Edges []*Node; Leaf Leaf}",
+    "github.com/go-on/menu.WriterTo": "type WriterTo interface {WriterTo(*Node,int,string) io.WriterTo}",
+    "github.com/go-on/menu.init": ""
+  },
+  "Path": "github.com/go-on/menu/menuhandler"
+}

@@ -6,7 +6,7 @@ gopkg.in/go-on/context.v1 #db458bd2390dbe922252f4508be1fedd31631d5a
 gopkg.in/go-on/go-http-auth.v1 #0c7409b87f66b1b5037bbf9f866aa9d8f7fd135c
 gopkg.in/go-on/go.uuid.v1 #a07c134f8289edd9ac6ee6f0aa5f3d345f4aaf27
 gopkg.in/go-on/goagain.v1 #57df1cf1051bfefc45cdfdd9cab45cab973d56cf
-gopkg.in/go-on/lib.v2 #677cb1a45ae749a656be4d472cdc2f7bf43f0f26
+gopkg.in/go-on/lib.v2 #972242af2aaaf838c84d505751d0ff70881c7af4
 gopkg.in/go-on/manners.v1 #d86c2a5e749b4cfabf588be80a5c31709fecb22a
 gopkg.in/go-on/mannersagain.v1 #dea8fca0792d8ffee3d9284c4ceb88d26f5ff5eb
 gopkg.in/go-on/method.v1 #25dc14148b5e431a59ef8b17b2abb6f6d41193bb
@@ -22,7 +22,6 @@ gopkg.in/metakeule/backtrace.v1 #bd523492241f375919137f4b41f909733c4d8369
 gopkg.in/metakeule/dbwrap.v2 #d9ce94f7ab49cf7c164bb241e3b7edafcb207dc1
 gopkg.in/metakeule/dispatch.v1 #8b101ef1c944b43be42ca34844b518165d9f31a8
 gopkg.in/metakeule/fmtdate.v1 #f3a8cd4fec2383625be3e880c62f2a4fd3014d32
-gopkg.in/metakeule/meta.v5 #d9e9512d8cd733f46e6ddbe76fa8078a326a245b
 gopkg.in/metakeule/nil.v1 #9ae4447377764df6b3a75687db45b2f486d24764
-gopkg.in/metakeule/pgsql.v5 #8e8eaa938f96e828cde048471d74ec292d40577d
+gopkg.in/metakeule/pgsql.v5 #b300fd6526de8937163c51038c5552c34495f4c7
 gopkg.in/metakeule/typeconverter.v2 #43805962133650e6a57b89487e9fd11cb07f65b8

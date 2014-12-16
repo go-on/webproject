@@ -1,0 +1,65 @@
+{
+  "github.com/go-on/html": {
+    "VCM": "git",
+    "Rev": "9443962a34499cbf22100bbbcd4bef53c04bce45",
+    "Parent": "github.com/go-on/bootstrap/bs3/bs3menu",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/html/attr": {
+    "VCM": "git",
+    "Rev": "9443962a34499cbf22100bbbcd4bef53c04bce45",
+    "Parent": "github.com/go-on/html/h",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/html/h": {
+    "VCM": "git",
+    "Rev": "9443962a34499cbf22100bbbcd4bef53c04bce45",
+    "Parent": "github.com/go-on/bootstrap/bs3/bs3menu",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/html/tag": {
+    "VCM": "git",
+    "Rev": "9443962a34499cbf22100bbbcd4bef53c04bce45",
+    "Parent": "github.com/go-on/bootstrap/bs3/bs3menu",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/menu": {
+    "VCM": "git",
+    "Rev": "a1e51cb9fced9af49d3010b4d7cc59a0b0de7670",
+    "Parent": "github.com/go-on/bootstrap/bs3/bs3menu",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/menu"
+  },
+  "github.com/go-on/menu/menuhtml": {
+    "VCM": "git",
+    "Rev": "a1e51cb9fced9af49d3010b4d7cc59a0b0de7670",
+    "Parent": "github.com/go-on/bootstrap/bs3/bs3menu",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/menu"
+  },
+  "github.com/go-on/replacer": {
+    "VCM": "git",
+    "Rev": "5e225d64c4fecbeb316c735e373d713f152415e7",
+    "Parent": "github.com/go-on/html",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/replacer"
+  },
+  "github.com/go-on/template": {
+    "VCM": "git",
+    "Rev": "4784a026f755d95da92f9a58b67116f140bbfb9c",
+    "Parent": "github.com/go-on/html",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/template"
+  },
+  "github.com/go-on/wrap-contrib/helper": {
+    "VCM": "git",
+    "Rev": "56c96387c10ff66cdfaee485da14fcf85a877e51",
+    "Parent": "github.com/go-on/html",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/wrap-contrib"
+  }
+}

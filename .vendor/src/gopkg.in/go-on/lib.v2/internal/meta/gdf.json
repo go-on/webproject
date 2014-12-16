@@ -1,0 +1,20 @@
+{
+  "Exports": {
+    "*Field.Set": "(*Field) Set(reflect.Value) error",
+    "*Pointer.Assoc": "(*Pointer) Assoc(reflect.Value) error",
+    "*Struct.Each": "(*Struct) Each((*Field))",
+    "*Struct.EachTag": "(*Struct) EachTag(string,(*Field,string))",
+    "*Struct.Field": "(*Struct) Field(string)(*Field,error)",
+    "*Struct.Set": "(*Struct) Set(reflect.Value) error",
+    "Field": "type Field struct {Struct *Struct; Type reflect.StructField; Value *reflect.Value}",
+    "Pointer": "type Pointer struct {Value *reflect.Value}",
+    "PointerByValue": "func (reflect.Value)(*Pointer,error)",
+    "SliceArg": "func (interface{}) []interface{}",
+    "Struct": "type Struct struct {Value *reflect.Value}",
+    "StructByType": "func (reflect.Type)(*Struct,error)",
+    "StructByValue": "func (reflect.Value)(*Struct,error)",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/meta"
+}

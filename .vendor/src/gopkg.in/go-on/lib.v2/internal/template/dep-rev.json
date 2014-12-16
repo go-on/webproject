@@ -1,0 +1,9 @@
+{
+  "github.com/go-on/replacer": {
+    "VCM": "git",
+    "Rev": "5e225d64c4fecbeb316c735e373d713f152415e7",
+    "Parent": "github.com/go-on/template",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/replacer"
+  }
+}

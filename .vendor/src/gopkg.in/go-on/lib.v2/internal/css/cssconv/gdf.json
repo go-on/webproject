@@ -1,0 +1,7 @@
+{
+  "Exports": {
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/css/cssconv"
+}

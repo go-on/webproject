@@ -1,0 +1,14 @@
+{
+  "Exports": {
+    "BLACK": "const \"black\"",
+    "BLUE": "const \"blue\"",
+    "CYAN": "const \"cyan\"",
+    "GREEN": "const \"green\"",
+    "RED": "const \"red\"",
+    "WHITE": "const \"white\"",
+    "YELLOW": "const \"yellow\"",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/css/color"
+}

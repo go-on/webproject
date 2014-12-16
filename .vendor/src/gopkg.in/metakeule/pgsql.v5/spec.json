@@ -1,0 +1,297 @@
+{
+  "OVERVIEW": {
+    "UUID": "2170b38e-eb4f-4352-a7be-8229872a79a1",
+    "Responsible": "mra",
+    "Title": "pgsql",
+    "Text": "pgsql facilitates operations on postgresql databases in go",
+    "Comments": {},
+    "LastUpdate": "2014-02-14",
+    "State": "PLANNING",
+    "Deadline": "2014-01-05",
+    "EstimatedHours": 1
+  },
+  "INFO": {
+    "Company": "Know GmbH",
+    "Project": "pgsql",
+    "URL": "",
+    "Language": "en_US",
+    "DateFormat": "YYYY-MM-DD",
+    "RequestedBy": [
+      "mra"
+    ],
+    "Related": {},
+    "Translations": {},
+    "SupersededBy": {},
+    "Resources": {},
+    "Persons": {
+      "mra": "Marc René Arns"
+    },
+    "Parent": "",
+    "Approved": false
+  },
+  "Sections": {
+    "CONTRADICTION": [],
+    "DEFINITION": [
+      {
+        "UUID": "471b5863-5d23-4134-b420-f0c1d0531bd3",
+        "Responsible": "mra",
+        "Title": "REST von Wikipedia",
+        "Text": "gemäß \u003chttp://de.wikipedia.org/wiki/Representational_State_Transfer\u003e\n\n\n#### GET\n\nfordert die angegebene Ressource vom Server an. GET weist keine Nebeneffekte auf. Der Zustand am Server wird nicht verändert, weshalb GET als sicher bezeichnet wird.\n\n#### POST\n\nfügt eine neue (Sub-)Ressource unterhalb der angegebenen Ressource ein. Da die neue Ressource noch keine URI besitzt, adressiert den URI die übergeordnete Ressource. Als Ergebnis wird der neue Ressourcenlink dem Client zurückgegeben.\n\n#### PUT\n\ndie angegebene Ressource wird angelegt. Wenn die Ressource bereits existiert, wird sie geändert.\n\n#### PATCH\n\nein Teil der angegeben Ressource wird geändert. Hierbei sind Nebeneffekte erlaubt.\n\n#### DELETE\n\nlöscht die angegebene Ressource. Wenn der Client versucht, eine Ressource zu löschen, die nicht existiert bzw. bereits gelöscht wurde, erhält der Client – sofern die REST-Schnittstelle korrekt implementiert wurde – keine Fehlermeldung (siehe auch: HTTP-Statuscodes). Abhängig von der Implementierung wird eine Ressource meist – entgegen der HTTP-Spezifikation – nicht physisch gelöscht, sondern nur als gelöscht gekennzeichnet und somit versteckt und deaktiviert.\n\n#### HEAD\n\nfordert Metadaten zu einer Ressource vom Server an.\n\n#### OPTIONS\n\nprüft, welche Methoden auf einer Ressource zur Verfügung stehen.\n",
+        "Comments": {},
+        "LastUpdate": "2014-01-18",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      }
+    ],
+    "FEATURE": [
+      {
+        "UUID": "b03408a7-8603-41ba-b328-3217fb30adb5",
+        "Responsible": "mra",
+        "Title": "Support for `If-Match` header wie heroku",
+        "Text": "##### Data integrity\n\nYou may pass the If-Match header with an ETag value from a previous \nresponse to ensure a resource has not changed since you last \nreceived it. If the resource has changed, you will receive a 412 \nPrecondition Failed response. If the resource has not changed, the \nrequest will proceed normally.\n\n\nsollte vielleicht auch als rack wrapper gegeben werden",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "daac10b8-3dff-46cf-bb80-86ff0552fb7c",
+        "Responsible": "mra",
+        "Title": "Get und List sollten nur Keys zurückgeben, die auch in der Definition stehen",
+        "Text": "Get und List sollten nur Keys zurückgeben, die auch in der Definition \nstehen, dazu ist es nötig, vor dem Json export in ein map zu transformieren",
+        "Comments": {},
+        "LastUpdate": "2014-01-18",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "b37b43ec-0153-41a5-b760-ceeffb8a100d",
+        "Responsible": "mra",
+        "Title": "List sollte ein leeres Json Array zurückgeben bei einer leeren Liste",
+        "Text": "",
+        "Comments": {},
+        "LastUpdate": "2014-01-18",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "8f8c70a5-170a-4df0-b2dc-2f4f9a0ad12c",
+        "Responsible": "mra",
+        "Title": "Get sollte 404 zurückgeben, wenn Id nicht vorhanden ist",
+        "Text": "",
+        "Comments": {},
+        "LastUpdate": "2014-01-18",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "eeb2b4fa-107d-4d6c-affb-e7f6272f971b",
+        "Responsible": "mra",
+        "Title": "HEAD unterstützen",
+        "Text": "`HEAD` soll das gleiche zurückliefern wie `GET`, nur ohne Body",
+        "Comments": {},
+        "LastUpdate": "2014-02-08",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "b4b7aed0-6521-4182-8e83-3aa6b5941fcb",
+        "Responsible": "mra",
+        "Title": "ETag unterstützen",
+        "Text": "jede `GET` anfrage auf eine einzelne Ressource soll ein Etag als Prüfsumme\nbilden und zurückgeben. (recherchieren, ob eine Prüfsumme genügt).\n",
+        "Comments": {},
+        "LastUpdate": "2014-02-08",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "854c2be1-68e2-4372-bd2f-3a0d33ac28ee",
+        "Responsible": "mra",
+        "Title": "statt PUT, PATCH registrieren",
+        "Text": "`PUT` wird für unseren Anwendungsfall nicht benötigt. Stattdessen `PATCH`.\nDa man ja im Struct definieren kann, was alles über `PATCH` aktualisiert\nwerden kann, kann dort auch alles stehen.\n\n",
+        "Comments": {},
+        "LastUpdate": "2014-02-08",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "e2ec7026-a4c8-48a3-84be-55bad3850121",
+        "Responsible": "mra",
+        "Title": "Prüfen auf `If-None-Match` Header",
+        "Text": "Falls der Header gesetzt wird und das entsprechendes `ETag` gleich ist,\nsoll ein `PATCH` nicht ausgeführt werden.\n\nsollte auch als rack wrapper gegeben werden",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "e1fcb4cc-1454-4e8a-a76f-b7d35a3b5c0e",
+        "Responsible": "mra",
+        "Title": "`X-Http-Method-Override` Header unterstützen",
+        "Text": "ist über `rack/wrapper` gewährleistet\nfunctioniert zur zeit mit router nicht (prüfen)",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "0647c48f-7ea7-4249-9836-e146202927e2",
+        "Responsible": "mra",
+        "Title": "Success Types wie heroku",
+        "Text": "##### Successful Responses\n\n    Status \u0009Description\n    \n    200 OK \u0009request succeeded\n    \n    201 Created \u0009resource created, for example a new app was created or an add-on was provisioned\n    \n    202 Accepted \u0009request accepted, but the processing has not been completed\n    \n    206 Partial Content \u0009request succeeded, but this is only a partial response, see ranges\n",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "d56c8077-568f-44f7-9315-2a8feab5c317",
+        "Responsible": "mra",
+        "Title": "Error States",
+        "Text": "###### Client Error Responses\n\n    Status \u0009Error ID \u0009Description\n    400 Bad Request \u0009bad_request \u0009request invalid, validate usage and try again\n    401 Unauthorized \u0009unauthorized \u0009request not authenticated, validate credentials and try again\n    402 Payment Required \u0009delinquent \u0009either the account has become delinquent as a result of non-payment, or the account’s payment method must be confirmed to continue\n    403 Forbidden \u0009forbidden \u0009request not authorized, provided credentials do not provide access to specified resource\n    403 Forbidden \u0009suspended \u0009request not authorized, account or application was suspended.\n    404 Not Found \u0009not_found \u0009request failed, the specified resource does not exist\n    406 Not Acceptable \u0009not_acceptable \u0009request failed, set Accept: application/vnd.heroku+json; version=3 header and try again\n    416 Requested Range Not Satisfiable \u0009requested_range_not_satisfiable \u0009request failed, validate Content-Range header and try again\n    422 Unprocessable Entity \u0009invalid_params \u0009request failed, validate parameters try again\n    422 Unprocessable Entity \u0009verification_needed \u0009request failed, enter billing information in the Heroku Dashboard before utilizing resources.\n    429 Too Many Requests \u0009rate_limit \u0009request failed, wait for rate limits to reset and try again, see rate limits\n\n###### Heroku Error Responses\n\n    Status \u0009Description\n    500 Internal Server Error \u0009error occurred, we are notified, but contact support if the issue persists\n    503 Service Unavailable \u0009API is unavailable, check response body or Heroku status for details\n\n",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "b05b9d1f-245a-4570-b1b8-e567d6db11b2",
+        "Responsible": "mra",
+        "Title": "Unterstützung für `OPTIONS` Anfrage",
+        "Text": "entsprechende `OPTIONS` anfrage mit \nmaximal `Allow: GET HEAD PATCH DELETE`  auf ressources und maximal\n`Allow: GET POST` auf listen urls. (Prüfen, ob die `Allow`-Syntax stimmt.",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "a044ed8d-81bf-4009-935d-21dbe3060e35",
+        "Responsible": "mra",
+        "Title": "Missing CRUD Tests",
+        "Text": "Tests are missing for\n\n#### Handler Creator Errors\n\n- table has a composed primary key\n- table has no primary key\n- table is not registered\n- table is not created\n- delete tag on non primary key\n- create create / update / list / read / delete handlers without\n  having the a correspondig tag set\n- field is not a (proper) pgsql field\n- proper error types\n  \n#### Types\n\n- handle all types supported by fat structs, except maps and slices\n- raise error for map and slice types\n- proper validation errors\n\n#### Actions: Error Conditions\n\n- wrong type of id\n- wrong type of patch / post parameter\n- missing post / patch parameter\n- double post / patch parameter\n- proper error types\n\n#### Handlers\n\n- Error Responses\n- Success Responses for PATCH, POST and DELETE\n- Status Codes\n- response Headers for POST\n- response content-types\n- validations, single field validations for PATCH and POST\n- proper distinguish validation errors and server errors\n- allow error handler to be passed it and be used for server errors",
+        "Comments": {},
+        "LastUpdate": "2014-01-27",
+        "State": "AGREED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "dc490d15-117d-4b7d-86b1-facd92bbebc1",
+        "Responsible": "mra",
+        "Title": "CRUD call",
+        "Text": "We want to able to define simple rest calls via fat structs, e.g.\n\n\n    type Person struct {\n\u0009    Id        *fat.Field `[...] pgsql.rest:\"delete,get,index\"`\n\u0009    LastName  *fat.Field `[...] pgsql.rest:\"get,post,put,index\"`\n\u0009    Age       *fat.Field `[...] pgsql.rest:\"get\"`\u0009\n    }\n    \n    func (p *Person) Validate() (invalidFields []string, err error) {\n    \u0009// Do some validation...\n    }\n    \n    var PERSON = fat.Proto(\u0026Person{}).(*Person)\n    \n    func init() {\n        r := router.New()\n        pgsql.NewCRUD(PERSON).MountAll(db, r, \"/person\")\n        http.ListenAndServe(\":8080\", r)\n    }\n    \n    \nThis should create the following routes\n\n    GET /person          // list of persons as json\n    GET /person/:id      // single person as json\n    PUT /person          // success in json\n    DELETE /person/:id   // success in json\n    POST /person/:id     // success in json\n\nwith their handlers. Each route should only respect the fields\nwith the corresponding `pgsql.crud` tag.\n\nThe following register methods should be available\n\n    MountIndex()\n    MountCREATE()\n    MountREAD()\n    MountUPDATE()\n    MountDELETE()\n    MountLIST()\n    MountAll()\n    Mount(CREATE|READ|UPDATE|LIST|DELETE)\n\nThat should allow to mount different rest handlers on different\nroutes.\n\n**Protection of routes will be done via the middleware in the router.**\n\nAll validation and type and default value features of the fat structs\nshould apply.\n\n`POST` and `PUT` should also respect a special header `X-Validation`\nwhich results in no database action but only realistic validation\nchecking and error reporting. This header could be used in ajax forms\nto validate and report validation errors before submitting a form.\nIf the addition header `X-Validate-Field` is set, only the given field\nis validated. So the normal procedure for a javascript validation \nlibrary would be:\n\n- on blur of each field, submit the form with `X-Validation` set to\n  true and `X-Validate-Field` set to the blurred field\n  \n- if their is a validation error, show the error near the field\n\n- if the last field is blurred, submit the form with `X-Validation` set to\n  true without `X-Validate-Field` to get the full validation\n  \n- if their is are validation errors, show the errors near the corresponding\n  fields\n  \n- continue if the values of fields change to validate with full \n  validation  \n  \n- if there are no validation errors and missing fields, allow to submit\n  the form, report any errors returned from submitting the form",
+        "Comments": {},
+        "LastUpdate": "2014-01-27",
+        "State": "IMPLEMENTING",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "d5ce0061-c406-4080-9bc1-2a4833f58fbc",
+        "Responsible": "mra",
+        "Title": "CRUD list",
+        "Text": "voraussetzung ist, dass offset und limit übergeben werden können\n\nSpezielle variante, die per json eine Liste abfragt.\n\nGrundsätzlich wird ein `int` als `LIMIT` angegeben,\nwenn das int `\u003c 0` ist, werden alle zurückgegeben.\n\nAls URL-Parameter werden berücksichtigt:\n\n- limit (kann noch weniger einfordern als vordefiniertes Limit)\n- offset\n- sortby (liste von feldern, nach denen sortiert wird)\n- sortorder (liste von sortierungsrichtungen, muss genausoviele \n  einträge haben, wie sortby)\n  \n  \n#### so macht heroku es und sollten wir es auch machen:\n\n\n\n#### Ranges \n  \n  List requests will return a Content-Range header indicating the \n  range of values returned. Large lists may require additional \n  requests to retrieve. If a list response has been truncated you \n  will receive a 206 Partial Content status and one or both of \n  Next-Range and Prev-Range headers if there are next and previous \n  ranges respectively. To retrieve the next or previous range, \n  repeat the request with the Range header set to either the \n  Next-Range or Prev-Range value from the previous request.  \n  The number of values returned in a range can be controlled using \n  a max key in the Range header. For example, to get only the first \n  10 values, set this header: Range: id ..; max=10;. max can also be \n  passed when iterating over Next-Range and Prev-Range. The default \n  page size is 200 and maximum page size is 1000.  \n  The property used to sort values in a list response can be changed. \n  The default property is id, as in Range: id ..;. To learn what other\n  properties you can use to sort a list response, inspect the \n  Accept-Ranges headers. For the apps resource, for example, you can \n  sort on either id or name: `Accept-Ranges: id, name`\n- The default sort order for resource lists responses is ascending. \n  You can opt for descending sort order by passing a order key in the \n  range header: `Range: name ..; order=desc;`  \n  Combining with the max key would look like this:  \n  `Range: name ..; order=desc,max=10;`\n  \n siehe auch: \u003chttp://benramsey.com/blog/2008/05/206-partial-content-and-range-requests/\u003e\n \n siehe auch: \u003chttp://tools.ietf.org/html/rfc2616#section-10.4.17\u003e",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "e12ed0ed-06eb-4c0c-9fc9-7b0b3cbe54bd",
+        "Responsible": "mra",
+        "Title": "CRUD success responses",
+        "Text": "- **`LIST / GET`**: `Status 200`, Array von jsonifizierten Werten\n- **`READ / GET`**: `Status 200` jsonifizierter Wert\n- **`CREATE / POST`**: `Status 201`\n  das `Location` Feld im Header gibt den Ort der neuen Ressource an\n  der Body die Id der neuen Ressource \n- **`UPDATE / PUT`**: `Status 204`\n- **`DELETE`**: `Status 204`\n  keine Daten\n\n",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "37cc8ec1-e2f6-4cc5-b7db-ffdbf654fa19",
+        "Responsible": "mra",
+        "Title": "CRUD fehlermeldungen",
+        "Text": "Grundsätzlich haben Fehlermeldungen vom Status `500` die Fehlermeldung\nim Body.\n    \nValidierungsfehler sehen so aus (Status `422`):\n\n    {\n      \"ValidationErrors\": {\n        \"fieldname\": \"validation error message\"\n      },\n      \"Error\": \"invalid data\"\n    }\n    \nDie Validierungsfehler kommen nur bei `PUT` und `POST` Routen.\n\nWird die Resource nicht gefunden, so gibt es eine Meldung folgender\nArt mit dem Status `404` und dem Body `Not found`",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "IMPLEMENTING",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "b8109600-d8ac-4137-afef-bf5015d187fa",
+        "Responsible": "mra",
+        "Title": "Validation",
+        "Text": "`POST` and `PUT` should also respect a special header `X-Validation`\nwhich results in no database action but only realistic validation\nchecking and error reporting. This header could be used in ajax forms\nto validate and report validation errors before submitting a form.\nIf the addition header `X-Validate-Field` is set, only the given field\nis validated. So the normal procedure for a javascript validation \nlibrary would be:\n\n- on blur of each field, submit the form with `X-Validation` set to\n  true and `X-Validate-Field` set to the blurred field\n  \n- if their is a validation error, show the error near the field\n\n- if the last field is blurred, submit the form with `X-Validation` set to\n  true without `X-Validate-Field` to get the full validation\n  \n- if their is are validation errors, show the errors near the corresponding\n  fields\n  \n- continue if the values of fields change to validate with full \n  validation  \n  \n- if there are no validation errors and missing fields, allow to submit\n  the form, report any errors returned from submitting the form",
+        "Comments": {},
+        "LastUpdate": "2014-02-14",
+        "State": "AGREED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      }
+    ],
+    "NONGOAL": [
+      {
+        "UUID": "74486739-2350-4597-899a-5f5a68849420",
+        "Responsible": "mra",
+        "Title": "translations of error / validation messages",
+        "Text": "error messages / validation messages should not be translated via the\npgsql library.\n\ninstead the website should offer a way to get \n\n- all translation messages (for small projects)\n- a translation for a given message\n- translations for a given number of messages\n\nand the clientside code (javascript) should query the translations \nfrom the website and show them instead of the original messages.\n\nthe translation service should also take a context to offer different \ntranslations in different contexts. the context is a URL optionally\nfollowed by a hash. That hash may refer to an id of an element (e.g.\nform element) or an anchor.",
+        "Comments": {},
+        "LastUpdate": "2014-01-05",
+        "State": "PLANNING",
+        "Deadline": "",
+        "EstimatedHours": 0
+      }
+    ],
+    "SCENARIO": [],
+    "UNDECIDED": [
+      {
+        "UUID": "92c37b03-985f-4da6-bd9d-04a439e642df",
+        "Responsible": "mra",
+        "Title": "CRUD methoden und rest urls",
+        "Text": "Es wird nur ein sinnvoller Teil der REST API Methoden \n(\u003chttp://en.wikipedia.org/wiki/Representational_state_transfer\u003e) \nimplementiert.\n\nDas Format ist immer JSON und für eine Ressource unter \n`/api/v1/person` sind dann folgende Routen erzeugbar:\n\n\n#### LIST\n\n    GET /api/v1/person\n    \nGibt eine Json Liste aller Personen\n\n#### CREATE\n\n    POST /api/v1/person\n    \nErzeugt eine neue Person und gibt im Location header die URL\nder neuen Ressource zurück. Im JSON steht der Primary Key  (ID) mit\ndem entsprechenden neuen Wert\n\n#### READ\n\n    GET /api/v1/person/1\n    \nGibt die JSON Respresentation der Person mit der ID 1 zurück\n\n#### UPDATE\n\n    PUT /api/v1/person/1\n    \nAktualisiert die Person mit der ID 1 entsprechend den übergebenen \nWerten\n\n#### DELETE\n\n    DELETE /api/v1/person/1",
+        "Comments": {},
+        "LastUpdate": "2014-01-27",
+        "State": "FINISHED",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "3daef0cb-e3cf-4065-91c8-5c0f7d67825c",
+        "Responsible": "",
+        "Title": "Abgleich mit heroku API",
+        "Text": "URL: \u003chttps://devcenter.heroku.com/articles/platform-api-reference#overview\u003e  \nDie API von Heroku ist ein guter Orientierungspunkt für Fragen, wie\n\n- Bereitstellung div. API Versionen\n- `CRUD / REST`  \n          \n\n     `DELETE` used for destroying existing objects  \n     `GET` \u0009used for retrieving lists and individual objects  \n     `HEAD` \u0009used for retrieving metadata about existing objects  \n     `PATCH` \u0009used for updating existing objects  \n     `PUT` \u0009used for replacing existing objects  \n     `POST` \u0009used for creating new objects  \n\n- Authentifizierung\n- Caching (das `ETag` könnte eine Prüfsumme über das zurückgegebene \n  Ergebnis sein und wird dann mit `If-None-Match` header abgeglichen)\n- `JSON schema` \u003chttps://blog.heroku.com/archives/2014/1/8/json_schema_for_heroku_platform_api\u003e\n- custom types  \n\n    `date-time` \u0009string \u0009timestamp in iso8601 format  \n    `uuid` \u0009string \u0009uuid in 8-4-4-4-12 format  \n    \n- Error Responses\n- Method Override  \n  When using a client that does not support all of the methods, \n  you can override by using a `POST` and setting the \n  `X-Http-Method-Override` header to the desired methed.  \n  For instance, to do a `PATCH` request, do a `POST` with header \n  `X-Http-Method-Override: PATCH`.\n- Data integrity  \n  You may pass the If-Match header with an ETag value from a previous \n  response to ensure a resource has not changed since you last \n  received it. If the resource has changed, you will receive a 412 \n  Precondition Failed response. If the resource has not changed, the \n  request will proceed normally.\n- Parameters  \n  Values that can be provided for an action are divided between \n  optional and required values. The expected type for each value is\n  specified and unlisted values should be considered immutable. \n  Parameters should be JSON encoded and passed in the request body.\n- Ranges \n  List requests will return a Content-Range header indicating the \n  range of values returned. Large lists may require additional \n  requests to retrieve. If a list response has been truncated you \n  will receive a 206 Partial Content status and one or both of \n  Next-Range and Prev-Range headers if there are next and previous \n  ranges respectively. To retrieve the next or previous range, \n  repeat the request with the Range header set to either the \n  Next-Range or Prev-Range value from the previous request.  \n  The number of values returned in a range can be controlled using \n  a max key in the Range header. For example, to get only the first \n  10 values, set this header: Range: id ..; max=10;. max can also be \n  passed when iterating over Next-Range and Prev-Range. The default \n  page size is 200 and maximum page size is 1000.  \n  The property used to sort values in a list response can be changed. \n  The default property is id, as in Range: id ..;. To learn what other\n  properties you can use to sort a list response, inspect the \n  Accept-Ranges headers. For the apps resource, for example, you can \n  sort on either id or name: `Accept-Ranges: id, name`\n- The default sort order for resource lists responses is ascending. \n  You can opt for descending sort order by passing a order key in the \n  range header: `Range: name ..; order=desc;`  \n  Combining with the max key would look like this:  \n  `Range: name ..; order=desc,max=10;`\n  \n##### Successful Responses\n\n    Status \u0009Description\n    \n    200 OK \u0009request succeeded\n    \n    201 Created \u0009resource created, for example a new app was created or an add-on was provisioned\n    \n    202 Accepted \u0009request accepted, but the processing has not been completed\n    \n    206 Partial Content \u0009request succeeded, but this is only a partial response, see ranges\n\n\n##### Error Responses\n\nError responses can be divided in to two classes. Client errors result from malformed requests and should be addressed by the client. Heroku errors result from problems on the server side and must be addressed internally.\n\n###### Client Error Responses\n\n    Status \u0009Error ID \u0009Description\n    400 Bad Request \u0009bad_request \u0009request invalid, validate usage and try again\n    401 Unauthorized \u0009unauthorized \u0009request not authenticated, validate credentials and try again\n    402 Payment Required \u0009delinquent \u0009either the account has become delinquent as a result of non-payment, or the account’s payment method must be confirmed to continue\n    403 Forbidden \u0009forbidden \u0009request not authorized, provided credentials do not provide access to specified resource\n    403 Forbidden \u0009suspended \u0009request not authorized, account or application was suspended.\n    404 Not Found \u0009not_found \u0009request failed, the specified resource does not exist\n    406 Not Acceptable \u0009not_acceptable \u0009request failed, set Accept: application/vnd.heroku+json; version=3 header and try again\n    416 Requested Range Not Satisfiable \u0009requested_range_not_satisfiable \u0009request failed, validate Content-Range header and try again\n    422 Unprocessable Entity \u0009invalid_params \u0009request failed, validate parameters try again\n    422 Unprocessable Entity \u0009verification_needed \u0009request failed, enter billing information in the Heroku Dashboard before utilizing resources.\n    429 Too Many Requests \u0009rate_limit \u0009request failed, wait for rate limits to reset and try again, see rate limits\n\n###### Heroku Error Responses\n\n    Status \u0009Description\n    500 Internal Server Error \u0009error occurred, we are notified, but contact support if the issue persists\n    503 Service Unavailable \u0009API is unavailable, check response body or Heroku status for details\n\n\n###### Oauth\n\n\u003chttps://devcenter.heroku.com/articles/oauth\u003e\n\n\n###### Autogenerating go client for json schema based api:\n\n\u003chttps://blog.heroku.com/archives/2014/1/9/auto_generating_a_go_api_client_for_heroku\u003e\n\nand\n\n\u003chttps://github.com/bgentry/heroku-go\u003e\n\n\n",
+        "Comments": {},
+        "LastUpdate": "2014-01-18",
+        "State": "",
+        "Deadline": "",
+        "EstimatedHours": 0
+      },
+      {
+        "UUID": "9a7f567a-5416-4ce0-9728-5ac79aa0bacf",
+        "Responsible": "mra",
+        "Title": "neuimplementierung mit trennung zwischen sql erzeugung und responsebearbeitung",
+        "Text": "Die Idee ist, ein package `sql` zu haben, welches nur das Datenbank\nspezifische SQL erzeugt und aber allgemeinen Interfaces genügt:\n\n\n    github.com/go-on/sql/\n       postgres/\n       mysql/\n       sqlite/\n       \nEin solches Interface könnte z.B. sein:\n\n    type SQL interface {\n       SQL() string\n    }\n    \n    type Field interface {\n       SQL\n       Table() SQL\n       Name() string\n       TableName() string\n    }\n    \nDann gäbe es für `Select`, `Update` usw. Funktionen, z.B.\n\n    type pgSelect struct {\n       Fields []Field\n       Aliases []Alias\n       Where []Condition\n       ....\n    }\n    \n    func (s *pgSelect) SQL() string {\n       // compose the sql string\n    }\n    \n    func SELECT(fields ...Field) pgSelect {\n       \n    }\n    \nDiese Funktionen hießen immer gleich. \nFunktionen gebe es auch für:\n\n- INSERT\n- UPDATE\n- SELECT\n- DELETE\n- CREATE\\_TABLE\n- ALTER\\_TABLE\n- DROP\\_TABLE\n\nDann ggf. methoden, z.B.\n\n- UNION\n- WHERE\n- AND eine where bedingung die als Parameter einer anderen Bedingung\n  übergeben wird und damit zu derem \"AND\" wird\n- OR eine where bedingung, die als Parameter einer anderen Bedingung\n  übergeben wird und damit zu derem \"OR\" wird\n- GROUP\\_BY\n- ORDER\\_BY\n- JOIN\n- LEFTJOIN\n- RIGHTJOIN\n- INNERJOIN\n\n\nEine selectabfrage könnte dann wie folgt aussehen:\n\n    person := TableStr(\"person\")\n    firstname := FieldStr(\"person.firstname\")\n    lastname := FieldStr(\"person.lastname\")\n    company := FieldStr(\"person.company\")\n    companyid := FieldStr(\"company.id\")\n    companyname := FieldStr(\"company.name\")\n\n    // order of parameters is irrelevant\n    sql := SELECT(firstname, lastname, companyname).\n      FROM(person).WHERE(\n        firstname, EQUALS, \"Peter\", \n        OR( lastname, MATCHES, \"Me(y|i)er\", \n          AND(firstname, EQUALS, \"Susi\"),\n        ),\n      ).\n      ORDER_BY(lastname, ASC, firstname, DESC).\n      LIMIT(12).\n      OFFSET(2).\n      JOIN(\n        companyname,\n        ON(company, companyid),\n      ).SQL()\n\nDie untersützten Typen samt typenumwandlung und das rückgeschreibe\nder Werte wären Gegenstand anderer Bibliotheken.",
+        "Comments": {},
+        "LastUpdate": "2014-01-29",
+        "State": "PLANNING",
+        "Deadline": "",
+        "EstimatedHours": 0
+      }
+    ]
+  }
+}

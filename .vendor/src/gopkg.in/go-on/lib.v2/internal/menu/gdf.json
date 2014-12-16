@@ -1,0 +1,19 @@
+{
+  "Exports": {
+    "*Node.FindByPath": "(*Node) FindByPath(string) *Node",
+    "*Node.FindByText": "(*Node) FindByText(string) *Node",
+    "*Node.MarshalJSON": "(*Node) MarshalJSON()([]byte,error)",
+    "*Node.RootAt": "(*Node) RootAt(int,string) *Node",
+    "*Node.UnmarshalJSON": "(*Node) UnmarshalJSON([]byte) error",
+    "Item": "func (string,string) Leaf",
+    "Json": "type Json struct {Path string; Subs []Json; Text string}",
+    "Leaf": "type Leaf interface {Path() string; String() string}",
+    "Node": "type Node struct {Edges []*Node; Leaf Leaf}",
+    "WriterTo": "type WriterTo interface {WriterTo(*Node,int,string) io.WriterTo}",
+    "WriterToFunc": "type WriterToFunc (*Node,int,string) io.WriterTo",
+    "WriterToFunc.WriterTo": "(WriterToFunc) WriterTo(*Node,int,string) io.WriterTo",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/menu"
+}

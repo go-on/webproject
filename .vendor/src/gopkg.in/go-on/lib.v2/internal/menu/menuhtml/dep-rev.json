@@ -1,0 +1,51 @@
+{
+  "github.com/go-on/html": {
+    "VCM": "git",
+    "Rev": "89dc16d4fe4e865457bb54028554fd2dddf0c48f",
+    "Parent": "github.com/go-on/menu/menuhtml",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/html/attr": {
+    "VCM": "git",
+    "Rev": "89dc16d4fe4e865457bb54028554fd2dddf0c48f",
+    "Parent": "github.com/go-on/html/h",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/html/h": {
+    "VCM": "git",
+    "Rev": "89dc16d4fe4e865457bb54028554fd2dddf0c48f",
+    "Parent": "github.com/go-on/menu/menuhtml",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/html/tag": {
+    "VCM": "git",
+    "Rev": "89dc16d4fe4e865457bb54028554fd2dddf0c48f",
+    "Parent": "github.com/go-on/menu/menuhtml",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/html"
+  },
+  "github.com/go-on/replacer": {
+    "VCM": "git",
+    "Rev": "5e225d64c4fecbeb316c735e373d713f152415e7",
+    "Parent": "github.com/go-on/html",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/replacer"
+  },
+  "github.com/go-on/template": {
+    "VCM": "git",
+    "Rev": "4784a026f755d95da92f9a58b67116f140bbfb9c",
+    "Parent": "github.com/go-on/html",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/template"
+  },
+  "github.com/go-on/wrap-contrib/helper": {
+    "VCM": "git",
+    "Rev": "56c96387c10ff66cdfaee485da14fcf85a877e51",
+    "Parent": "github.com/go-on/html",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/wrap-contrib"
+  }
+}

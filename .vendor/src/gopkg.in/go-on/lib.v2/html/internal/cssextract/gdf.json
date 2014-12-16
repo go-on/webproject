@@ -1,0 +1,11 @@
+{
+  "Exports": {
+    "Lex": "func (string,string,chan bool)(*lexer,chan item)",
+    "Parse": "func (string) *Parser",
+    "Parser": "type Parser struct {Classes []string; Ids []string}",
+    "Stringer": "type Stringer interface {String() string}",
+    "init": ""
+  },
+  "Imports": {},
+  "Path": "github.com/go-on/html/cssextract"
+}

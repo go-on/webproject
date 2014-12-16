@@ -1,0 +1,30 @@
+{
+  "github.com/go-on/fat": {
+    "VCM": "git",
+    "Rev": "98d07ac0c8c22aa1ac2e54fff46ebf0ebf9ad446",
+    "Parent": "github.com/go-on/template/templfat",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/fat"
+  },
+  "github.com/go-on/meta": {
+    "VCM": "git",
+    "Rev": "de7cdc5a7a1d8e49adf524c7fac4d51b4bce010f",
+    "Parent": "github.com/go-on/template/templfat",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/meta"
+  },
+  "github.com/go-on/replacer": {
+    "VCM": "git",
+    "Rev": "5e225d64c4fecbeb316c735e373d713f152415e7",
+    "Parent": "github.com/go-on/template",
+    "Tag": "",
+    "RepoRoot": "github.com/go-on/replacer"
+  },
+  "github.com/metakeule/nil": {
+    "VCM": "git",
+    "Rev": "b40a66acd4786844053f3f3f8dfc28212c800fd8",
+    "Parent": "github.com/go-on/fat",
+    "Tag": "",
+    "RepoRoot": "github.com/metakeule/nil"
+  }
+}

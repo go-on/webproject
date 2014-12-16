@@ -1,0 +1,42 @@
+{
+  "Exports": {
+    "Placeholder": "func (*github.com/go-on/fat.Field) github.com/go-on/template.Placeholder",
+    "Setter": "func (*github.com/go-on/fat.Field) github.com/go-on/template.Setter",
+    "Setters": "func (interface{}) []github.com/go-on/template.Setter",
+    "init": ""
+  },
+  "Imports": {
+    "github.com/go-on/fat.*Field.Get": "(*Field) Get() interface{}",
+    "github.com/go-on/fat.*Field.IsValid": "(*Field) IsValid() bool",
+    "github.com/go-on/fat.*Field.MarshalJSON": "(*Field) MarshalJSON()([]byte,error)",
+    "github.com/go-on/fat.*Field.MustScanAndValidate": "(*Field) MustScanAndValidate(string)",
+    "github.com/go-on/fat.*Field.MustScanString": "(*Field) MustScanString(string)",
+    "github.com/go-on/fat.*Field.MustSet": "(*Field) MustSet(interface{})",
+    "github.com/go-on/fat.*Field.MustValidate": "(*Field) MustValidate()",
+    "github.com/go-on/fat.*Field.Scan": "(*Field) Scan(interface{}) error",
+    "github.com/go-on/fat.*Field.ScanAndValidate": "(*Field) ScanAndValidate(string) []error",
+    "github.com/go-on/fat.*Field.ScanString": "(*Field) ScanString(string) error",
+    "github.com/go-on/fat.*Field.Set": "(*Field) Set(interface{}) error",
+    "github.com/go-on/fat.*Field.String": "(*Field) String() string",
+    "github.com/go-on/fat.*Field.UnmarshalJSON": "(*Field) UnmarshalJSON([]byte) error",
+    "github.com/go-on/fat.*Field.Validate": "(*Field) Validate() []error",
+    "github.com/go-on/fat.*Field.Value": "(*Field) Value()(database/sql/driver.Value,error)",
+    "github.com/go-on/fat.Field": "type Field struct { Type; FailedScanInput string; IsSet bool; Struct interface{}}",
+    "github.com/go-on/fat.init": "",
+    "github.com/go-on/meta.*Field.Set": "(*Field) Set(reflect.Value) error",
+    "github.com/go-on/meta.Field": "type Field struct {Struct *Struct; Type reflect.StructField; Value *reflect.Value}",
+    "github.com/go-on/meta.StructByValue": "func (reflect.Value)(*Struct,error)",
+    "github.com/go-on/meta.init": "",
+    "github.com/go-on/template.NewPlaceholder": "func (string,...func(interface{}) string) Placeholder",
+    "github.com/go-on/template.Placeholder": "type Placeholder interface {Name() string; Set(interface{}) Setter; SetString() string; Setf(string,...interface{}) Setter; WriteTo(io.Writer)(int64,error)}",
+    "github.com/go-on/template.Setter": "type Setter interface {Name() string; SetString() string; io.WriterTo}",
+    "github.com/go-on/template.TemplatePlaceholder": "type TemplatePlaceholder struct {Escaper [](interface{}) string; Value string}",
+    "github.com/go-on/template.TemplatePlaceholder.Name": "(TemplatePlaceholder) Name() string",
+    "github.com/go-on/template.TemplatePlaceholder.Set": "(TemplatePlaceholder) Set(interface{}) Setter",
+    "github.com/go-on/template.TemplatePlaceholder.SetString": "(TemplatePlaceholder) SetString() string",
+    "github.com/go-on/template.TemplatePlaceholder.Setf": "(TemplatePlaceholder) Setf(string,...interface{}) Setter",
+    "github.com/go-on/template.TemplatePlaceholder.WriteTo": "(TemplatePlaceholder) WriteTo(io.Writer)(int64,error)",
+    "github.com/go-on/template.init": ""
+  },
+  "Path": "github.com/go-on/template/templfat"
+}
