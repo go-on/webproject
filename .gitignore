@@ -1,4 +1,5 @@
-.vendor/pkg
+# .vendor/pkg
+# .vendor/bin
 
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o

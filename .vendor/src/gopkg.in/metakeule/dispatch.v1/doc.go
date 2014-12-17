@@ -41,7 +41,7 @@ Using dispatch you have more flexibility:
 
 	import (
 		"fmt"
-		"github.com/metakeule/dispatch"
+		"gopkg.in/dispatch.v1"
 	)
 
 	type MyStruct { *Dispatcher}
