@@ -10,7 +10,7 @@ gopkg.in/go-on/lib.v2 #972242af2aaaf838c84d505751d0ff70881c7af4
 gopkg.in/go-on/manners.v1 #d86c2a5e749b4cfabf588be80a5c31709fecb22a
 gopkg.in/go-on/mannersagain.v1 #dea8fca0792d8ffee3d9284c4ceb88d26f5ff5eb
 gopkg.in/go-on/method.v1 #25dc14148b5e431a59ef8b17b2abb6f6d41193bb
-gopkg.in/go-on/nosurf.v1 #d77c890bdde216c8331ba011698bf4e749bc788a
+gopkg.in/go-on/nosurf.v1 #4344e0f7be029daa4a4786e356890bddad7896bb
 gopkg.in/go-on/queue.v2 #c535d4535fc36b3918d21329cba768e5fe536ee9
 gopkg.in/go-on/router.v2 #038d3bbee9dc0ca8d5a7f7400b4fc4b795abcdd5
 gopkg.in/go-on/securecookie.v1 #f0559d009e6943011cd1ba6eb16195cf5e0ed326
