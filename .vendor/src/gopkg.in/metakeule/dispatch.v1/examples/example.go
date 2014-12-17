@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gopkg.in/dispatch.v1"
+
+	"gopkg.in/metakeule/dispatch.v1"
 )
 
 type I int

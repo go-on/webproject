@@ -20,7 +20,7 @@ gopkg.in/go-on/wrap-contrib.v2 #d0d08a5368aa611f066aaaaec89a45b48cff9adb
 gopkg.in/go-on/wrap.v2 #544168af414c702f648d14fc90cd206b3e750c00
 gopkg.in/metakeule/backtrace.v1 #bd523492241f375919137f4b41f909733c4d8369
 gopkg.in/metakeule/dbwrap.v2 #b418117ef00d7558eb16e92cd87ec5038d854c86
-gopkg.in/metakeule/dispatch.v1 #36f5b93b6dc5afca0653f8f94e6e27af517634d6
+gopkg.in/metakeule/dispatch.v1 #7ed9413eb83996247d0bd54e13f5d52fabe1ace8
 gopkg.in/metakeule/fmtdate.v1 #f3a8cd4fec2383625be3e880c62f2a4fd3014d32
 gopkg.in/metakeule/nil.v1 #9ae4447377764df6b3a75687db45b2f486d24764
 gopkg.in/metakeule/pgsql.v5 #b300fd6526de8937163c51038c5552c34495f4c7
