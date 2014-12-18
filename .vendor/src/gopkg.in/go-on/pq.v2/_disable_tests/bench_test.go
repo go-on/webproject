@@ -7,7 +7,7 @@ import (
 	"bytes"
 	"database/sql"
 	"database/sql/driver"
-	"github.com/lib/pq/oid"
+	"gopkg.in/go-on/pq.v2/oid"
 	"io"
 	"math/rand"
 	"net"

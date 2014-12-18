@@ -10,7 +10,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
-	"github.com/lib/pq/oid"
+	"gopkg.in/go-on/pq.v2/oid"
 	"io"
 	"io/ioutil"
 	"net"

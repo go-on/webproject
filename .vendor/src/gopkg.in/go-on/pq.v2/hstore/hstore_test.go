@@ -2,7 +2,7 @@ package hstore
 
 import (
 	"database/sql"
-	_ "github.com/lib/pq"
+	_ "gopkg.in/go-on/pq.v2"
 	"os"
 	"testing"
 )

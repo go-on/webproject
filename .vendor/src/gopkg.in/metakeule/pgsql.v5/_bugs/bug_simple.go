@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/lib/pq"
+	"gopkg.in/go-on/pq.v2"
 	//"github.com/metakeule/pq"
 	"net/http"
 	"os"

@@ -5,7 +5,7 @@ In most cases clients will use the database/sql package instead of
 using this package directly. For example:
 
 	import (
-		_ "github.com/lib/pq"
+		_ "gopkg.in/go-on/pq.v2"
 		"database/sql"
 	)
 

@@ -2,16 +2,12 @@ package wrapstesting
 
 import (
 	"net/http"
+	"testing"
 
-	"gopkg.in/go-on/wrap.v2"
 	"gopkg.in/go-on/wrap-contrib.v2/helper"
 	"gopkg.in/go-on/wrap-contrib.v2/wraps"
-	. "launchpad.net/gocheck"
+	"gopkg.in/go-on/wrap.v2"
 )
-
-type handleSuite struct{}
-
-var _ = Suite(&handleSuite{})
 
 type _handle struct {
 	path string
@@ -27,10 +23,10 @@ func (c *_handle) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func mkHandle(rw http.ResponseWriter, req *http.Request) http.ResponseWriter {
-	return _handle{ResponseWriter: rw}
+	return &_handle{ResponseWriter: rw}
 }
 
-func (s *handleSuite) TestContextHandlerMethod(c *C) {
+func TestResponseWriterHandlerMethod(t *testing.T) {
 	r := wrap.New(
 		Context(mkHandle),
 		wraps.Before(HandlerMethod((*_handle).Prepare)),
@@ -41,5 +37,7 @@ func (s *handleSuite) TestContextHandlerMethod(c *C) {
 	r.ServeHTTP(rw, req)
 	err := helper.AssertResponse(rw, "~/path~", 200)
 
-	c.Assert(err, Equals, nil)
+	if err != nil {
+		t.Error(err)
+	}
 }

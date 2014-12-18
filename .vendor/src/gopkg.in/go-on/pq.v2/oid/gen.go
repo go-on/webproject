@@ -11,7 +11,7 @@ import (
 	"os/exec"
 
 	"database/sql"
-	_ "github.com/lib/pq"
+	_ "gopkg.in/go-on/pq.v2"
 )
 
 func main() {

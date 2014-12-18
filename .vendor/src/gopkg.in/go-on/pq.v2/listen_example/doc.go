@@ -18,7 +18,7 @@ mechanism to avoid polling the database while waiting for more work to arrive.
     package main
 
     import (
-        "github.com/lib/pq"
+        "gopkg.in/go-on/pq.v2"
 
         "database/sql"
         "fmt"

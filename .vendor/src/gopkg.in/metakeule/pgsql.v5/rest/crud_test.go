@@ -10,22 +10,23 @@ import (
 	"gopkg.in/go-on/lib.v2/internal/fat"
 	"gopkg.in/metakeule/dbwrap.v2"
 	. "gopkg.in/metakeule/pgsql.v5"
+	"gopkg.in/metakeule/pgsql.v5/pgsqlfat"
 
 	"strings"
 	// "net/url"
 	//"fmt"
 	"testing"
 
-	"github.com/lib/pq"
+	"gopkg.in/go-on/pq.v2"
 )
 
 func configureDB() string {
-	dbconnectString := "postgres://docker:docker@172.17.0.2:5432/pgsqltest?schema=public"
-	if dbconn := os.Getenv("TEST_DB_CONNECTION"); dbconn != "" {
+	dbconnectString := "postgres://docker:docker@172.17.0.2:5432/pgsqltest"
+	if dbconn := os.Getenv("PG_TEST"); dbconn != "" {
 		dbconnectString = dbconn
 	}
-	fmt.Println("TEST_DB_CONNECTION is %#v", os.Getenv("TEST_DB_CONNECTION"))
-	fmt.Println("dbconnectString is set to %#v", dbconnectString)
+	// fmt.Printf("PG_TEST is %#v\n", os.Getenv("PG_TEST"))
+	// fmt.Printf("dbconnectString is set to %#v\n", dbconnectString)
 	return dbconnectString
 }
 
@@ -363,8 +364,15 @@ func TestCRUDList(t *testing.T) {
 	`), false, "")
 
 	//CRUDCompany.Update(db, id2, parseQuery("Name=testlist2&Age=43&Ratings=[6,7,8]"))
+	// registry.Field
 
-	companyNameField := registry.Field("*github.com/metakeule/pgsql/rest.Company", "Name")
+	var c *Company = &Company{}
+	// ty := reflect.TypeOf(c)
+	// ty.
+	tyPath := pgsqlfat.TypeString(c) // ty.PkgPath() + ty.String()
+	// println(tyPath, "vs", "*github.com/metakeule/pgsql/rest.Company")
+	// "*github.com/metakeule/pgsql/rest.Company"
+	companyNameField := registry.Field(tyPath, "Name")
 
 	if companyNameField == nil {
 		panic("can't find field for COMPANY.Name")
