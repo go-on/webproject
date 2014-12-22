@@ -11,12 +11,12 @@ func (ErrPairParams) Error() string {
 
 // ErrMissingParam is raised if a route URL parameter is missing.
 type ErrMissingParam struct {
-	param       string
-	mountedPath string
+	Param       string
+	MountedPath string
 }
 
 func (e ErrMissingParam) Error() string {
-	return "parameter " + e.param + " is missing for route " + e.mountedPath
+	return "parameter " + e.Param + " is missing for route " + e.MountedPath
 }
 
 // ErrRouteIsNil is raised if a route is not yet defined.
@@ -33,16 +33,6 @@ type ErrUnknownMethod struct {
 
 func (e ErrUnknownMethod) Error() string {
 	return "unknown method " + e.Method.String()
-}
-
-// ErrMethodNotDefined is raised if the given http method is not defined for the given route
-type ErrMethodNotDefined struct {
-	method.Method
-	Route *Route
-}
-
-func (e *ErrMethodNotDefined) Error() string {
-	return "method " + e.Method.String() + " is not defined for route " + e.Route.DefinitionPath
 }
 
 // ErrDoubleMounted is raised if the route already has been mounted.

@@ -12,13 +12,14 @@ gopkg.in/go-on/method.v1 #25dc14148b5e431a59ef8b17b2abb6f6d41193bb
 gopkg.in/go-on/nosurf.v1 #4344e0f7be029daa4a4786e356890bddad7896bb
 gopkg.in/go-on/pq.v2 #0d009c09e638b2bf41f73079f098b5a6a9200a3c
 gopkg.in/go-on/queue.v2 #c535d4535fc36b3918d21329cba768e5fe536ee9
-gopkg.in/go-on/router.v2 #038d3bbee9dc0ca8d5a7f7400b4fc4b795abcdd5
+gopkg.in/go-on/router.v2 #ad11e284bf3c543544cdfc14f6fc78844bd0ed92
 gopkg.in/go-on/securecookie.v1 #f0559d009e6943011cd1ba6eb16195cf5e0ed326
 gopkg.in/go-on/sessions.v1 #00a2d6372d7b762e0e4596db9cd03ac6c54a46a0
 gopkg.in/go-on/wrap-contrib-testing.v2 #ecd2d5e2f6adbb9d4379eea88b520f33ed7c5ff2
 gopkg.in/go-on/wrap-contrib.v2 #d0d08a5368aa611f066aaaaec89a45b48cff9adb
 gopkg.in/go-on/wrap.v2 #544168af414c702f648d14fc90cd206b3e750c00
 gopkg.in/metakeule/backtrace.v1 #520aa0f37f5fee5d4cbf5971aec66e73b62a8e66
+gopkg.in/metakeule/config.v1 #09fbd34c942b985d1691603e7ad754b1b7f873c1
 gopkg.in/metakeule/dbwrap.v2 #6de813dcb3dba600f1f87c699ce59626583ab9b4
 gopkg.in/metakeule/dispatch.v1 #7ed9413eb83996247d0bd54e13f5d52fabe1ace8
 gopkg.in/metakeule/fmtdate.v1 #f3a8cd4fec2383625be3e880c62f2a4fd3014d32
