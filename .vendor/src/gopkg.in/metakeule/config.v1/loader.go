@@ -56,13 +56,15 @@ func (c *Config) Load(withArgs bool) error {
 					return err
 				}
 
-				merged1, err1 := c.mergeArgs(true, ARGS)
+				merged1, err1 := c.mergeArgs(true, ARGS, sub.skippedOptions, sub.relaxedOptions)
 				if err1 != nil {
 					return err1
 				}
 
+				emptyO := map[string]bool{}
+
 				// then overwrite with args
-				merged2, err2 := sub.mergeArgs(true, ARGS)
+				merged2, err2 := sub.mergeArgs(true, ARGS, emptyO, emptyO)
 				if err2 != nil {
 					return err2
 				}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	// "flag"
 	// "fmt"
@@ -14,17 +15,17 @@ import (
 )
 
 var (
-	cfg               = config.MustNew("config", "1.0.0", "a multiplattform and multilanguage configuration tool")
-	optionCommand     = cfg.NewString("command", "the command where the options belong to", config.Required, config.Shortflag('c'))
+	cfg               = config.MustNew("config", "1.7.7", "a multiplattform and multilanguage configuration tool")
+	optionProgram     = cfg.NewString("program", "the program where the options belong to (must be a config compatible program)", config.Required, config.Shortflag('p'))
 	optionLocations   = cfg.NewBool("locations", "the locations where the options are currently set", config.Shortflag('l'))
-	cfgSet            = cfg.MustCommand("set", "set an option")
+	cfgSet            = cfg.MustCommand("set", "set an option").Skip("locations")
 	optionSetKey      = cfgSet.NewString("option", "the option that should be set", config.Required, config.Shortflag('o'))
 	optionSetValue    = cfgSet.NewString("value", "the value the option should be set to", config.Required, config.Shortflag('v'))
-	optionSetPathType = cfgSet.NewString("type", "the type of the config path where the value should be set", config.Shortflag('p'), config.Required)
-	cfgGet            = cfg.MustCommand("get", "get the current value of an option")
+	optionSetPathType = cfgSet.NewString("type", "the type of the config path where the value should be set. valid values are global,user and local", config.Shortflag('t'), config.Required)
+	cfgGet            = cfg.MustCommand("get", "get the current value of an option").Skip("locations")
 	optionGetKey      = cfgGet.NewString("option", "the option that should be get, if not set, all options that are set are returned", config.Shortflag('o'))
-	cfgPath           = cfg.MustCommand("path", "show the paths for the configuration files")
-	optionPathType    = cfgPath.NewString("type", "the type of the config path. valid values are global,user,local and all", config.Shortflag('p'), config.Default("all"))
+	cfgPath           = cfg.MustCommand("path", "show the paths for the configuration files").Skip("locations")
+	optionPathType    = cfgPath.NewString("type", "the type of the config path. valid values are global,user,local and all", config.Shortflag('t'), config.Default("all"))
 )
 
 func GetVersion(cmdpath string) (string, error) {
@@ -34,14 +35,19 @@ func GetVersion(cmdpath string) (string, error) {
 		return "", err
 	}
 	// fmt.Printf("version: %#v\n", string(out))
-	return strings.TrimSpace(string(out)), nil
+	v := strings.Split(strings.TrimSpace(string(out)), " ")
+	if len(v) != 3 {
+		return "", fmt.Errorf("%s --version returns invalid result: %#v", cmdpath, string(out))
+	}
+	return strings.TrimSpace(v[2]), nil
 }
 
 func GetSpec(cmdpath string, c *config.Config) error {
 	cmd := exec.Command(cmdpath, "--config-spec")
 	out, err := cmd.Output()
 	if err != nil {
-		return err
+		return fmt.Errorf("%s does not seem to be compatible with config", cmdpath)
+		// return err
 	}
 	return c.UnmarshalJSON(out)
 }
@@ -49,6 +55,7 @@ func GetSpec(cmdpath string, c *config.Config) error {
 func writeErr(err error) {
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %s\n", err)
+		fmt.Fprintln(os.Stdout, " -> run 'config help' to get more help")
 		os.Exit(1)
 	}
 }
@@ -87,14 +94,14 @@ func main() {
 
 	err := cfg.Run()
 	writeErr(err)
-	cmd = optionCommand.Get()
+	cmd = optionProgram.Get()
 	commandPath, err = exec.LookPath(cmd)
 	writeErr(err)
 	var version string
 	version, err = GetVersion(commandPath)
 	writeErr(err)
 
-	cmdConfig, err = config.New(cmd, version, "")
+	cmdConfig, err = config.New(filepath.Base(cmd), version, "")
 	writeErr(err)
 	err = GetSpec(commandPath, cmdConfig)
 	writeErr(err)
@@ -112,7 +119,7 @@ func main() {
 	case cfgGet:
 		err := cmdConfig.Load(false)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "Can't load config options for command %s: %s", cmd, err.Error())
+			fmt.Fprintf(os.Stderr, "Can't load config options for program %s: %s", cmd, err.Error())
 			os.Exit(1)
 		}
 		if !optionGetKey.IsSet() {
@@ -123,7 +130,7 @@ func main() {
 			var b []byte
 			b, err = json.Marshal(vals)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Can't print locations for command %s: %s", cmd, err.Error())
+				fmt.Fprintf(os.Stderr, "Can't print locations for program %s: %s", cmd, err.Error())
 				os.Exit(1)
 			}
 
@@ -132,7 +139,7 @@ func main() {
 		} else {
 			key := optionGetKey.Get()
 			if !cmdConfig.IsOption(key) {
-				fmt.Fprintf(os.Stderr, "unknown option %s", cmd, err.Error())
+				fmt.Fprintf(os.Stderr, "unknown option %s", key)
 				os.Exit(1)
 			}
 
@@ -210,7 +217,7 @@ func main() {
 			}
 			b, err := json.Marshal(paths)
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "Can't print locations for command %s: %s", cmd, err.Error())
+				fmt.Fprintf(os.Stderr, "Can't print locations for program %s: %s", cmd, err.Error())
 				os.Exit(1)
 			}
 

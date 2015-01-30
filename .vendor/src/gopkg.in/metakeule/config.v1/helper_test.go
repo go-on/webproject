@@ -36,7 +36,8 @@ func ExampleConfig() {
 	verbose := app.NewBool("verbose", "show verbose messages", Required)
 	// real application would use
 	// err := app.Run()
-	app.mergeArgs(false, []string{"--verbose"})
+	empty := map[string]bool{}
+	app.mergeArgs(false, []string{"--verbose"}, empty, empty)
 	fmt.Printf("verbose: %v", verbose.Get())
 	// Output: verbose: true
 }
