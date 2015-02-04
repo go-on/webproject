@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	cfg               = config.MustNew("config", "1.7.7", "a multiplattform and multilanguage configuration tool")
+	cfg               = config.MustNew("config", "1.10.0", "a multiplattform and multilanguage configuration tool")
 	optionProgram     = cfg.NewString("program", "the program where the options belong to (must be a config compatible program)", config.Required, config.Shortflag('p'))
 	optionLocations   = cfg.NewBool("locations", "the locations where the options are currently set", config.Shortflag('l'))
 	cfgSet            = cfg.MustCommand("set", "set an option").Skip("locations")
