@@ -66,11 +66,19 @@ func (wq Query) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	defer enc.Finish()
 
+	colNum := scanner.ColNum()
+
 	for scanner.Next() {
-		m := map[string]interface{}{}
 		mapper := wq.mapperFn()
-		mapper.MapColumns(m)
-		err = scanner.Scan(m)
+
+		cols := make([]interface{}, colNum)
+		for i := 0; i < colNum; i++ {
+			cols[i] = mapper.Map(scanner.Column(i))
+		}
+
+		// m := map[string]interface{}{}
+		// mapper.MapColumns(m)
+		err = scanner.Scan(cols...)
 
 		// we already wrote something to the body, so handle errors gracefully
 		if err != nil && wq.errorHandler != nil {

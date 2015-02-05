@@ -2,13 +2,14 @@ package wsi
 
 import (
 	"database/sql"
-	"gopkg.in/go-on/pq.v2"
-	"gopkg.in/metakeule/dbwrap.v2"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"strings"
 	"testing"
+
+	"gopkg.in/go-on/pq.v2"
+	"gopkg.in/metakeule/dbwrap.v2"
 )
 
 var fake, db = dbwrap.NewFake()
@@ -47,9 +48,19 @@ func searchPersonIds(opts QueryOptions, w http.ResponseWriter, r *http.Request) 
 	return DBQuery(db, "SELECT id FROM person ORDER BY $1 LIMIT $2 OFFSET $3", strings.Join(opts.OrderBy, ","), limit, opts.Offset)
 }
 
-func (p *person) MapColumns(colToField map[string]interface{}) {
-	colToField["id"] = &p.Id
-	colToField["name"] = &p.Name
+func (p *person) Map(column string) interface{} {
+
+	switch column {
+	case "id":
+		return &p.Id
+	case "name":
+		return &p.Name
+	default:
+		panic("unknown column " + column)
+	}
+
+	// colToField["id"] = &p.Id
+	// colToField["name"] = &p.Name
 }
 
 type person struct {
@@ -59,7 +70,7 @@ type person struct {
 	err  error
 }
 
-func newPersonMapper() ColumnsMapper {
+func newPersonMapper() Mapper {
 	return &person{}
 }
 

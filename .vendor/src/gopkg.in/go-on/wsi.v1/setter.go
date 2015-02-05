@@ -1,8 +1,9 @@
 package wsi
 
 import (
-	"gopkg.in/go-on/builtin.v1"
 	"time"
+
+	"gopkg.in/go-on/builtin.v1"
 )
 
 // Setter is a helper to be used inside of fake scanner functions for unit testing.
@@ -123,8 +124,8 @@ func TestQuery(d ...map[string]Setter) func(targets map[string]interface{}) (sto
 	}
 }
 
-func NewTestQuery(d ...map[string]Setter) Scanner {
-	return NewTestScanner(TestQuery(d...))
+func NewTestQuery(cols []string, d ...map[string]Setter) Scanner {
+	return NewTestScanner(cols, TestQuery(d...))
 }
 
 // SetMap sets each value in the target by the setter of the same key inside src.

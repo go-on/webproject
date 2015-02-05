@@ -18,22 +18,29 @@ type Person struct {
 	Age  int `json:",omitempty"`
 }
 
-// maps the columns to the fields of a new Person
+// maps the given column to a pointer of a fields of the Person
 // must be a pointer method
-func (p *Person) MapColumns(colToField map[string]interface{}) {
-	colToField["id"] = &p.Id
-	colToField["name"] = &p.Name
-	colToField["age"] = &p.Age
+func (p *Person) Map(column string) (fieldPtr interface{}) {
+	switch column {
+	case "id":
+		return &p.Id
+	case "name":
+		return &p.Name
+	case "age":
+		return &p.Age
+	default:
+		panic("unknown column " + column)
+	}
 }
 
 // newPerson is a function that creates a new person.
 // we need this as wsi.Ressource to generate the http.Handlers
-var newPerson wsi.RessourceFunc = func() wsi.ColumnsMapper { return &Person{} }
+var newPerson wsi.RessourceFunc = func() wsi.Mapper { return &Person{} }
 
 // findPersonsFake fakes our query, for a realistic query, see findPersons
 // if any error happens, it must write to the response writer and return an error
 func findPersonsFake(opts wsi.QueryOptions, w http.ResponseWriter, r *http.Request) (wsi.Scanner, error) {
-	return wsi.NewTestQuery(testData...), nil
+	return wsi.NewTestQuery([]string{"id", "name"}, testData...), nil
 }
 
 // creates a http.Handler based on findPersonsFake that writes the resulting persons as json
@@ -65,13 +72,13 @@ func findPersons(opts wsi.QueryOptions, w http.ResponseWriter, r *http.Request) 
 	)
 }
 
-// createPerson creates a person based on the values inside the given map
+// createPerson creates a person based on the values of the given ColumnsMapper
 // and writes to the given responsewriter
 // we need to return an error here, even if we handle the response writing, so that the general
 // error handler may be called
-func createPerson(m map[string]interface{}, w http.ResponseWriter, r *http.Request) error {
+func createPerson(m wsi.Mapper, w http.ResponseWriter, r *http.Request) error {
 	// we fake a created response here
-	res := map[string]interface{}{"Id": 400, "Name": m["name"]}
+	res := map[string]interface{}{"Id": 400, "Name": m.Map("name")}
 	w.WriteHeader(http.StatusCreated)
 	wsi.ServeJSON(res, w)
 	return nil

@@ -4,13 +4,13 @@ import (
 	"net/http"
 )
 
-// ColumnsMapper maps columns to fields
-type ColumnsMapper interface {
-	// MapColumns must map sql query columns to pointer of fields of the object.
+// Mapper maps a column to a pointer of a field
+type Mapper interface {
+	// Maps must map an sql query column to a pointer of a field of the object.
 	// This method is used by WriteJSON in order to do a
 	// search query, write the results back to the provided fields that correspond to the columns
 	// and writing an array of json objects that are the serialization of the object.
-	// Therefor MapColumns must be a pointer method and must set the columns to field pointers.
+	// Therefor Map must be a pointer method and must set the column to field pointer.
 	//
 	// Example
 	//
@@ -19,12 +19,20 @@ type ColumnsMapper interface {
 	//	  Name       string
 	// }
 	//
-	// func (p *Person) MapColumns(colToField map[string]interface{}) {
-	//	colToField["id"] = &p.Id
-	//	colToField["name"] = &p.Name
+	// func (p *Person) Map(column string) (fieldRef interface{}) {
+	//	switch column {
+	//  case "id":
+	//  	return &p.Id
+	//  case "name":
+	//  	return &p.Name
+	//  case "age":
+	//  	return &p.Age
+	//  default:
+	//  	panic("unknown column " + column)
+	//  }
 	// }
 	//
-	MapColumns(colToField map[string]interface{})
+	Map(column string) (fieldRef interface{})
 }
 
 // POSTValidater validates data of POST requests

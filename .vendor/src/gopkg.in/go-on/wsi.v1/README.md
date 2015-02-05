@@ -18,14 +18,21 @@ type Person struct {
     Age  int `json:",omitempty"`
 }
 
-// maps the columns to the fields of a new Person; must be a pointer method
-func (p *Person) MapColumns(colToField map[string]interface{}) {
-    colToField["id"] = &p.Id
-    colToField["name"] = &p.Name
-    colToField["age"] = &p.Age
+// maps the column to the pointer of a field; must be a pointer method
+func (p *Person) Map(column string) interface{} {
+    switch column {
+    case "id":
+        return &p.Id
+    case "name":
+        return &p.Name
+    case "age":
+        return &p.Age
+    default:
+        panic("unknown column " + column)
+    }
 }
 
-var newPerson wsi.Ressource = func() wsi.ColumnsMapper { return &Person{} }
+var newPerson wsi.RessourceFunc = func() wsi.Mapper { return &Person{} }
 
 func findPersons(opts wsi.QueryOptions, w http.ResponseWriter, r *http.Request) (wsi.Scanner, error) {
     sc, err := wsi.DBQuery(
