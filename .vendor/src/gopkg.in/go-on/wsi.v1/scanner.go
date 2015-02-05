@@ -22,6 +22,18 @@ type Scanner interface {
 	Error() error
 }
 
+// ScanToMapper scans the values from a scanner to a mapper
+func ScanToMapper(sc Scanner, m Mapper) error {
+	colNum := sc.ColNum()
+	vals := make([]interface{}, colNum)
+
+	for i := 0; i < colNum; i++ {
+		vals[i] = m.Map(sc.Column(i))
+	}
+
+	return sc.Scan(vals...)
+}
+
 // NewTestScanner returns a new faking Scanner using the given function to fake the scanning.
 // The function is called each time the scanners Scan method is called and the target map is passed to fn.
 // If fn returns an error, each further call of Scan will return this error and fn is no longer called.
