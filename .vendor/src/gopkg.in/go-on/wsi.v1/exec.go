@@ -44,6 +44,15 @@ func (we Exec) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				ServeJSON(errsMarshaller(errs), w)
 				return
 			}
+		} else {
+			if val, ok := mapper.(Validater); ok {
+				errs := val.Validate()
+				if len(errs) > 0 {
+					w.WriteHeader(http.StatusBadRequest)
+					ServeJSON(errsMarshaller(errs), w)
+					return
+				}
+			}
 		}
 	case "PATCH":
 		if val, ok := mapper.(PATCHValidater); ok {
@@ -53,6 +62,15 @@ func (we Exec) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				ServeJSON(errsMarshaller(errs), w)
 				return
 			}
+		} else {
+			if val, ok := mapper.(Validater); ok {
+				errs := val.Validate()
+				if len(errs) > 0 {
+					w.WriteHeader(http.StatusBadRequest)
+					ServeJSON(errsMarshaller(errs), w)
+					return
+				}
+			}
 		}
 	case "POST":
 		if val, ok := mapper.(POSTValidater); ok {
@@ -61,6 +79,15 @@ func (we Exec) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusBadRequest)
 				ServeJSON(errsMarshaller(errs), w)
 				return
+			}
+		} else {
+			if val, ok := mapper.(Validater); ok {
+				errs := val.Validate()
+				if len(errs) > 0 {
+					w.WriteHeader(http.StatusBadRequest)
+					ServeJSON(errsMarshaller(errs), w)
+					return
+				}
 			}
 		}
 	}

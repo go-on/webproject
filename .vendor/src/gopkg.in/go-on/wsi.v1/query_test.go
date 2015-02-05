@@ -103,7 +103,7 @@ func TestRealDB(t *testing.T) {
 	p.ServeHTTP(rec, req)
 
 	if p.err != nil {
-		t.Errorf("got err: %s", err.Error())
+		t.Errorf("got err: %s", p.err.Error())
 	}
 
 	got := rec.Body.String()

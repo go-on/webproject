@@ -19,7 +19,7 @@ gopkg.in/go-on/sessions.v1 #00a2d6372d7b762e0e4596db9cd03ac6c54a46a0
 gopkg.in/go-on/wrap-contrib-testing.v2 #ecd2d5e2f6adbb9d4379eea88b520f33ed7c5ff2
 gopkg.in/go-on/wrap-contrib.v2 #d0d08a5368aa611f066aaaaec89a45b48cff9adb
 gopkg.in/go-on/wrap.v2 #544168af414c702f648d14fc90cd206b3e750c00
-gopkg.in/go-on/wsi.v1 #4a0f1efbc5f0289cd2dad10ba08b62bab6b895bb
+gopkg.in/go-on/wsi.v1 #b66fe3efa5f8a434eef2d09204156f721e0f8e36
 gopkg.in/gomail.v1 #d7294067b867578fbea56a07541dcd0c851e5c41
 gopkg.in/metakeule/backtrace.v1 #520aa0f37f5fee5d4cbf5971aec66e73b62a8e66
 gopkg.in/metakeule/config.v1 #07df82cf151dbc7f0bd363a6db771c471c7bd779
@@ -29,5 +29,5 @@ gopkg.in/metakeule/fmtdate.v1 #f3a8cd4fec2383625be3e880c62f2a4fd3014d32
 gopkg.in/metakeule/nil.v1 #9ae4447377764df6b3a75687db45b2f486d24764
 gopkg.in/metakeule/nodouble.v1 #d9745cbf1775a86fbdfe52bc821c442a93c1974d
 gopkg.in/metakeule/pgsql.v5 #b9ee27b701b58188f9464e5b62cb154043eadab5
-gopkg.in/metakeule/scaffold.v1 #04837da395dcb95b2dc5242c91b1de1cf2297cba
+gopkg.in/metakeule/scaffold.v1 #90fad96a23438e4395fca5e3ef5c4d5545274183
 gopkg.in/metakeule/typeconverter.v2 #43805962133650e6a57b89487e9fd11cb07f65b8

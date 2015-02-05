@@ -42,6 +42,11 @@ type PATCHValidater interface {
 	ValidatePATCH() map[string]error
 }
 
+// Validater is a fallback/default validater for POST, PUT and PATCH requests
+type Validater interface {
+	Validate() map[string]error
+}
+
 // QueryFunc is a function that returns a Scanner (with the help of the Query function) for the given
 // search parameters that are
 //   - orderBy strings, such as "name ASC" or "id DESC"
