@@ -56,6 +56,14 @@ func MustMapSQL(structPtr interface{}) map[string]interface{} {
 	return m
 }
 
+func ColumnPtrs(structPtr interface{}, fields []string) ([]interface{}, error) {
+	s, err := meta.StructByValue(reflect.ValueOf(structPtr))
+	if err != nil {
+		return nil, err
+	}
+	return s.ToPtrSlice("sql", fields), nil
+}
+
 // NewJSONStreamer returns a JSONStreamer for the given ResponseWriter and starts writing to it.
 // The json content type is set and the opening bracket of the json array is written.
 // The next step should be to call the Encode method for every json object that should be written

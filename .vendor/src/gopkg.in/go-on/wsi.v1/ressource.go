@@ -7,13 +7,13 @@ import (
 // QueryFunc makes the sql query and returns a Scanner. If an error is returned, QueryFunc must write
 // to the reponsewriter (set the status code etc). If no error is returned QueryFunc must not write
 // to the response write. specific headers are the exception and may be set.
-type QueryFunc func(QueryOptions, http.ResponseWriter, *http.Request) (Scanner, error)
+type QueryFunc func(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error)
 
 // ExecFunc makes the sql exec and writes to the response writer. If must return an error, if
 // some happened, so that the error may be passed to the general error handler
-type ExecFunc func(Mapper, http.ResponseWriter, *http.Request) error
+type ExecFunc func(map[string]interface{}, http.ResponseWriter, *http.Request) error
 
-type RessourceFunc func() Mapper
+type RessourceFunc func() interface{}
 
 func (r RessourceFunc) Exec(e ExecFunc) Exec {
 	if e == nil {
@@ -50,6 +50,6 @@ func (rs Ressource) ServeExec(e ExecFunc, w http.ResponseWriter, r *http.Request
 	ee.ServeHTTP(w, r)
 }
 
-func NewRessource(fn func() Mapper) Ressource {
+func NewRessource(fn func() interface{}) Ressource {
 	return Ressource{RessourceFunc: fn}
 }

@@ -92,7 +92,17 @@ func (we Exec) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	err = we.fn(mapper, w, r)
+	var m map[string]interface{}
+	m, err = MapSQL(mapper)
+	if err != nil {
+		if we.errorHandler != nil {
+			we.errorHandler(r, err)
+		}
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = we.fn(m, w, r)
 	if err != nil {
 		if we.errorHandler != nil {
 			we.errorHandler(r, err)

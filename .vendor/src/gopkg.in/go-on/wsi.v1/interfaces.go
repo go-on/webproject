@@ -4,6 +4,7 @@ import (
 	"net/http"
 )
 
+/*
 // Mapper maps a column to a pointer of a field
 type Mapper interface {
 	// Maps must map an sql query column to a pointer of a field of the object.
@@ -32,8 +33,9 @@ type Mapper interface {
 	//  }
 	// }
 	//
-	Map(column string) (fieldRef interface{})
+	// Map(column string) (fieldRef interface{})
 }
+*/
 
 // POSTValidater validates data of POST requests
 type POSTValidater interface {

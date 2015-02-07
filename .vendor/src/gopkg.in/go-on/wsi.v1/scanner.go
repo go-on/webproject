@@ -18,20 +18,26 @@ type Scanner interface {
 	// Column returns the column name for the given position
 	Column(pos int) string
 
+	Columns() []string
+
 	// Error should return the first error that did happen
 	Error() error
 }
 
 // ScanToMapper scans the values from a scanner to a mapper
-func ScanToMapper(sc Scanner, m Mapper) error {
-	colNum := sc.ColNum()
-	vals := make([]interface{}, colNum)
-
-	for i := 0; i < colNum; i++ {
-		vals[i] = m.Map(sc.Column(i))
+func ScanToMapper(sc Scanner, m interface{}) error {
+	// colNum := sc.ColNum()
+	// vals := make([]interface{}, colNum)
+	/*
+		for i := 0; i < colNum; i++ {
+			vals[i] = m.Map(sc.Column(i))
+		}
+	*/
+	ptrs, err := ColumnPtrs(m, sc.Columns())
+	if err != nil {
+		return err
 	}
-
-	return sc.Scan(vals...)
+	return sc.Scan(ptrs...)
 }
 
 // NewTestScanner returns a new faking Scanner using the given function to fake the scanning.
@@ -66,6 +72,10 @@ func (f *TestScanner) Next() bool {
 
 func (f *TestScanner) ColNum() int {
 	return len(f.cols)
+}
+
+func (f *TestScanner) Columns() []string {
+	return f.cols
 }
 
 func (f *TestScanner) Column(pos int) string {
@@ -114,6 +124,11 @@ func (sc *dbScanner) Error() error {
 func (sc *dbScanner) ColNum() int {
 	cols, _ := sc.Rows.Columns()
 	return len(cols)
+}
+
+func (sc *dbScanner) Columns() []string {
+	cols, _ := sc.Rows.Columns()
+	return cols
 }
 
 func (sc *dbScanner) Column(pos int) string {

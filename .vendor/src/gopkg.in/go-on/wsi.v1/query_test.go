@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
-	"strings"
 	"testing"
 
 	"gopkg.in/go-on/pq.v2"
@@ -15,68 +14,41 @@ import (
 var fake, db = dbwrap.NewFake()
 var realDB *sql.DB
 
-func searchPersonFromDB(opts QueryOptions, w http.ResponseWriter, r *http.Request) (Scanner, error) {
-	if len(opts.OrderBy) == 0 {
-		opts.OrderBy = append(opts.OrderBy, "id ASC")
-	}
-	limit := opts.Limit
+func searchPersonFromDB(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
 	if limit == 0 {
 		limit = 30
 	}
-	return DBQuery(realDB, `SELECT 2 AS "id", 'hiho' AS "name" ORDER BY $1 LIMIT $2 OFFSET $3`, strings.Join(opts.OrderBy, ","), limit, opts.Offset)
+	return DBQuery(realDB, `SELECT 2 AS "Id", 'hiho' AS "Name" ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
 }
 
-func searchPeronsIdsNames(opts QueryOptions, w http.ResponseWriter, r *http.Request) (Scanner, error) {
-	if len(opts.OrderBy) == 0 {
-		opts.OrderBy = append(opts.OrderBy, "id ASC")
-	}
-	limit := opts.Limit
+func searchPeronsIdsNames(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
 	if limit == 0 {
 		limit = 20
 	}
-	return DBQuery(db, "SELECT id,name FROM person ORDER BY $1 LIMIT $2 OFFSET $3", strings.Join(opts.OrderBy, ","), limit, opts.Offset)
+	return DBQuery(db, `SELECT "Id","Name" FROM person ORDER BY "Name" LIMIT $1 OFFSET $2`, limit, offset)
 }
 
-func searchPersonIds(opts QueryOptions, w http.ResponseWriter, r *http.Request) (Scanner, error) {
-	if len(opts.OrderBy) == 0 {
-		opts.OrderBy = append(opts.OrderBy, "id ASC")
-	}
-	limit := opts.Limit
+func searchPersonIds(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
 	if limit == 0 {
 		limit = 10
 	}
-	return DBQuery(db, "SELECT id FROM person ORDER BY $1 LIMIT $2 OFFSET $3", strings.Join(opts.OrderBy, ","), limit, opts.Offset)
-}
-
-func (p *person) Map(column string) interface{} {
-
-	switch column {
-	case "id":
-		return &p.Id
-	case "name":
-		return &p.Name
-	default:
-		panic("unknown column " + column)
-	}
-
-	// colToField["id"] = &p.Id
-	// colToField["name"] = &p.Name
+	return DBQuery(db, `SELECT "Id" FROM person ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
 }
 
 type person struct {
 	Id   int
 	Name string
-	Age  int `json:",omitempty"`
+	Age  int `json:",omitempty" sql:",omitempty"`
 	err  error
 }
 
-func newPersonMapper() Mapper {
+func newPersonMapper() interface{} {
 	return &person{}
 }
 
 func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	errHandler := func(rr *http.Request, err error) { p.err = err }
-	var fn func(QueryOptions, http.ResponseWriter, *http.Request) (Scanner, error)
+	var fn func(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error)
 	switch r.URL.Path {
 	case "/a":
 		fn = searchPeronsIdsNames
@@ -89,7 +61,7 @@ func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
-	fake.SetNumInputs(3)
+	fake.SetNumInputs(2)
 }
 
 func TestRealDB(t *testing.T) {
@@ -137,24 +109,22 @@ func TestRealDB(t *testing.T) {
 func TestQueryRun(t *testing.T) {
 	p := &person{}
 
-	queryA := "SELECT id,name FROM person ORDER BY $1 LIMIT $2 OFFSET $3"
-	queryB := "SELECT id FROM person ORDER BY $1 LIMIT $2 OFFSET $3"
+	queryA := `SELECT "Id","Name" FROM person ORDER BY "Name" LIMIT $1 OFFSET $2`
+	queryB := `SELECT "Id" FROM person ORDER BY "Id" LIMIT $1 OFFSET $2`
 
 	tests := []struct {
-		url     string
-		limit   int64
-		offset  int64
-		orderBy string
-		query   string
+		url    string
+		limit  int64
+		offset int64
+		query  string
 	}{
-		{"/a", 20, 0, "id ASC", queryA},
-		{"/a?sort=-name&limit=-1&offset=-20", 20, 0, "name DESC", queryA},
-		{"/a?sort=name&sort=id", 20, 0, "name ASC,id ASC", queryA},
-		{"/a?sort=-name&sort=id", 20, 0, "name DESC,id ASC", queryA},
-		{"/a?sort=-name&sort=id&limit=12", 12, 0, "name DESC,id ASC", queryA},
-		{"/a?sort=-name&sort=id&limit=0&offset=2", 20, 2, "name DESC,id ASC", queryA},
-		{"/a?offset=4", 20, 4, "id ASC", queryA},
-		{"/b?offset=5", 10, 5, "id ASC", queryB},
+		{"/a", 20, 0, queryA},
+		{"/a?limit=-1&offset=-20", 20, 0, queryA},
+		{"/a", 20, 0, queryA},
+		{"/a?limit=12", 12, 0, queryA},
+		{"/a?limit=0&offset=2", 20, 2, queryA},
+		{"/a?offset=4", 20, 4, queryA},
+		{"/b?offset=5", 10, 5, queryB},
 	}
 
 	for _, test := range tests {
@@ -169,15 +139,11 @@ func TestQueryRun(t *testing.T) {
 			t.Errorf("%s => query = %#v, want: %#v", test.url, got, want)
 		}
 
-		if want, got := test.orderBy, lastVals[0]; want != got {
-			t.Errorf("%s => orderBy = %#v, want: %#v, got: %#v", test.url, got, want)
-		}
-
-		if want, got := test.limit, lastVals[1].(int64); want != got {
+		if want, got := test.limit, lastVals[0].(int64); want != got {
 			t.Errorf("%s => limit = %v, want: %v", test.url, got, want)
 		}
 
-		if want, got := test.offset, lastVals[2].(int64); want != got {
+		if want, got := test.offset, lastVals[1].(int64); want != got {
 			t.Errorf("%s => offset = %v, want: %v", test.url, got, want)
 		}
 
