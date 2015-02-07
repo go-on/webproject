@@ -11,7 +11,7 @@ import (
 
 	"gopkg.in/go-on/router.v2/route"
 
-	"gopkg.in/go-on/lib.v2/internal/fat"
+	"gopkg.in/go-on/lib.v3/internal/fat"
 	"gopkg.in/go-on/router.v2"
 	"gopkg.in/go-on/wrap-contrib-testing.v2/wrapstesting"
 	. "gopkg.in/metakeule/pgsql.v5"

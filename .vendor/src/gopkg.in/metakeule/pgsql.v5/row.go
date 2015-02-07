@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"gopkg.in/go-on/lib.v2/internal/meta"
+	"gopkg.in/go-on/lib.v3/internal/meta"
 
 	// "gopkg.in/metakeule/meta.v5"
 	"gopkg.in/metakeule/typeconverter.v2"

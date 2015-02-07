@@ -8,8 +8,8 @@ import (
 	"strings"
 	"sync"
 
-	"gopkg.in/go-on/lib.v2/internal/fat"
-	mt "gopkg.in/go-on/lib.v2/internal/meta"
+	"gopkg.in/go-on/lib.v3/internal/fat"
+	mt "gopkg.in/go-on/lib.v3/internal/meta"
 	. "gopkg.in/metakeule/pgsql.v5"
 )
 

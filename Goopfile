@@ -1,7 +1,7 @@
 gopkg.in/go-on/builtin.v1
 gopkg.in/go-on/context.v1
 gopkg.in/go-on/cdncache.v1
-gopkg.in/go-on/lib.v2
+gopkg.in/go-on/lib.v3
 gopkg.in/go-on/queue.v2
 gopkg.in/go-on/router.v2
 gopkg.in/go-on/wrap.v2

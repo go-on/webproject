@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"gopkg.in/go-on/lib.v2/internal/fat"
+	"gopkg.in/go-on/lib.v3/internal/fat"
 	. "gopkg.in/metakeule/pgsql.v5"
 )
 
