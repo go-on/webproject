@@ -18,6 +18,48 @@ func (x xx) String() string {
 	return string(x)
 }
 
+func TestToMap(t *testing.T) {
+	var x = struct {
+		A string `testtag:"a"`
+		B string `testtag:",omitempty"`
+		C int
+		D bool `testtag:"-"`
+	}{
+		A: "a",
+		B: "",
+		C: 5,
+		D: true,
+	}
+
+	stru, err := StructByValue(reflect.ValueOf(&x))
+
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	m := stru.ToMap("testtag")
+
+	if m["a"] != "a" {
+		t.Errorf("wrong value for x.A: expected %#v, got %#v", "a", m["a"])
+	}
+
+	if m["C"] != 5 {
+		t.Errorf("wrong value for x.C: expected %v, got %v", 5, m["C"])
+	}
+
+	if _, has := m["B"]; has {
+		t.Errorf("x.B should be omitted, but is: %v", m["B"])
+	}
+
+	if _, has := m["D"]; has {
+		t.Errorf("x.D should be omitted, but is: %v", m["D"])
+	}
+
+	if len(m) != 2 {
+		t.Errorf("%#v should have length of 2", m)
+	}
+}
+
 func TestEachTag(t *testing.T) {
 	res := map[string]string{}
 

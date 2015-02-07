@@ -3,6 +3,7 @@ package meta
 import (
 	"fmt"
 	"reflect"
+	"strings"
 )
 
 type Field struct {
@@ -98,6 +99,17 @@ func (s *Struct) EachTag(tagKey string, fn func(field *Field, tagVal string)) {
 	s.Each(f)
 }
 
+// get every field and its tag for a given tag key, tags with value "-" are ignored
+func (s *Struct) EachTagWithEmpty(tagKey string, fn func(field *Field, tagVal string)) {
+	f := func(field *Field) {
+		tagVal := field.Type.Tag.Get(tagKey)
+		if tagVal != "-" {
+			fn(field, tagVal)
+		}
+	}
+	s.Each(f)
+}
+
 // returns a struct tag for a field
 func (s *Struct) Tag(field string) (*reflect.StructTag, error) {
 	if !(s.Value.Kind() == reflect.Struct) {
@@ -128,4 +140,72 @@ func (s *Struct) Tags() (tags map[string]*reflect.StructTag, err error) {
 		}
 	}
 	return
+}
+
+// ToMap converts a given struct to a map. If tag is not "", it follows the
+// same semantics as json encoding, but for the given tag.
+// Panics on errors
+func (s *Struct) ToMap(tag string) map[string]interface{} {
+	sm := &structMap{s, tag, map[string]interface{}{}}
+	sm.ToMap()
+	return sm.m
+}
+
+type structMap struct {
+	*Struct
+	tag string
+	m   map[string]interface{}
+}
+
+// toMap ignores the tag
+func (s *structMap) toMapNotTagged() {
+	s.Each(s.setField)
+}
+
+func (s *structMap) setField(field *Field) {
+	s.m[field.Type.Name] = field.Value.Interface()
+}
+
+// toMapTagged requires tag to be set to something other than ""
+func (s *structMap) toMapTagged() {
+	s.EachTagWithEmpty(s.tag, s.setTaggedField)
+}
+
+func (s *structMap) ToMap() {
+	if s.tag == "" {
+		s.toMapNotTagged()
+		return
+	}
+	s.toMapTagged()
+}
+
+func (s *structMap) setTaggedField(field *Field, tagVal string) {
+	if tagVal == "" {
+		// same as if tag == ""
+		s.setField(field)
+		return
+	}
+
+	tvs := strings.Split(tagVal, ",")
+	fieldName := tvs[0]
+
+	var omitempty bool
+	if len(tvs) > 1 && tvs[1] == "omitempty" {
+		omitempty = true
+	}
+
+	// omit empty values as required by omitempty tag
+	if IsZero(*field.Value) && omitempty {
+		return
+	}
+
+	if fieldName == "" {
+		fieldName = field.Type.Name
+	}
+
+	s.m[fieldName] = field.Value.Interface()
+}
+
+func IsZero(v reflect.Value) bool {
+	return v.Interface() == reflect.Zero(v.Type()).Interface()
 }
