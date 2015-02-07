@@ -18,23 +18,6 @@ type Person struct {
 	Age  int `json:",omitempty" sql:",omitempty"`
 }
 
-/*
-// maps the given column to a pointer of a fields of the Person
-// must be a pointer method
-func (p *Person) Map(column string) (fieldPtr interface{}) {
-	switch column {
-	case "id":
-		return &p.Id
-	case "name":
-		return &p.Name
-	case "age":
-		return &p.Age
-	default:
-		panic("unknown column " + column)
-	}
-}
-*/
-
 // newPerson is a function that creates a new person.
 // we need this as wsi.Ressource to generate the http.Handlers
 var newPerson wsi.RessourceFunc = func() interface{} { return &Person{} }

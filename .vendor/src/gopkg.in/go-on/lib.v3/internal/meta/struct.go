@@ -214,16 +214,6 @@ func (s *structSlice) setTaggedFieldPtr(field *Field, tagVal string) {
 	tvs := strings.Split(tagVal, ",")
 	fieldName := tvs[0]
 
-	var omitempty bool
-	if len(tvs) > 1 && tvs[1] == "omitempty" {
-		omitempty = true
-	}
-
-	// omit empty values as required by omitempty tag
-	if IsZero(*field.Value) && omitempty {
-		return
-	}
-
 	if fieldName == "" {
 		fieldName = field.Type.Name
 	}

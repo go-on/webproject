@@ -19,7 +19,12 @@ func (x xx) String() string {
 }
 
 func TestToPtrSlice(t *testing.T) {
-	x := testStruct{}
+	var x struct {
+		A string `testtag:"a"`
+		B string `testtag:",omitempty"`
+		S fmt.Stringer
+		D bool `testtag:"-"`
+	}
 
 	stru, err := StructByValue(reflect.ValueOf(&x))
 
@@ -27,16 +32,22 @@ func TestToPtrSlice(t *testing.T) {
 		t.Errorf(err.Error())
 	}
 
-	sl := stru.ToPtrSlice("testtag", []string{"S", "x"})
+	sl := stru.ToPtrSlice("testtag", []string{"S", "a", "B"})
 
-	if len(sl) != 2 {
-		t.Errorf("len(sl) = %v // expected 2", len(sl))
+	if len(sl) != 3 {
+		t.Errorf("len(sl) = %v // expected 3", len(sl))
 	}
 
 	*(sl[1].(*string)) = "a"
 
 	if x.A != "a" {
 		t.Errorf("wrong value for x.A: expected %#v, got %#v", "a", x.A)
+	}
+
+	*(sl[2].(*string)) = "b"
+
+	if x.B != "b" {
+		t.Errorf("wrong value for x.B: expected %#v, got %#v", "b", x.B)
 	}
 
 	*(sl[0].(*fmt.Stringer)) = xx("S")
