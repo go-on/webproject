@@ -1,6 +1,10 @@
 package wsi
 
-import "database/sql"
+import (
+	"gopkg.in/go-on/builtin.v1/sqlnull"
+
+	"database/sql"
+)
 
 // Scanner is a more comfortable scanner that works similar to sql.Rows but does not have to be closed.
 type Scanner interface {
@@ -13,10 +17,10 @@ type Scanner interface {
 	Scan(vals ...interface{}) error
 
 	// ColNum returns the number of columns
-	ColNum() int
+	// ColNum() int
 
 	// Column returns the column name for the given position
-	Column(pos int) string
+	// Column(pos int) string
 
 	Columns() []string
 
@@ -70,24 +74,30 @@ func (f *TestScanner) Next() bool {
 	return !f.stop
 }
 
+/*
 func (f *TestScanner) ColNum() int {
 	return len(f.cols)
 }
+*/
 
 func (f *TestScanner) Columns() []string {
 	return f.cols
 }
 
+/*
 func (f *TestScanner) Column(pos int) string {
 	return f.cols[pos]
 }
+*/
 
 // Scan allows scanning by column name instead of column position
 func (f *TestScanner) Scan(vals ...interface{}) error {
+
+	cols := f.Columns()
 	m := map[string]interface{}{}
 
 	for i, val := range vals {
-		m[f.Column(i)] = val
+		m[cols[i]] = val
 	}
 
 	// fmt.Println("scan called")
@@ -121,20 +131,24 @@ func (sc *dbScanner) Error() error {
 	return sc.err
 }
 
+/*
 func (sc *dbScanner) ColNum() int {
 	cols, _ := sc.Rows.Columns()
 	return len(cols)
 }
+*/
 
 func (sc *dbScanner) Columns() []string {
 	cols, _ := sc.Rows.Columns()
 	return cols
 }
 
+/*
 func (sc *dbScanner) Column(pos int) string {
 	cols, _ := sc.Rows.Columns()
 	return cols[pos]
 }
+*/
 
 // Next returns false if there are no rows left or if any error happened before
 func (sc *dbScanner) Next() bool {
@@ -165,7 +179,8 @@ func (sc *dbScanner) Scan(vals ...interface{}) error {
 			vals[i] = val
 		}
 	*/
-	sc.err = sc.Rows.Scan(vals...)
+	wr := sqlnull.Wrap(sc.Rows)
+	sc.err = wr.Scan(vals...)
 	if sc.err != nil && !sc.closed {
 		sc.Rows.Close()
 		sc.closed = true

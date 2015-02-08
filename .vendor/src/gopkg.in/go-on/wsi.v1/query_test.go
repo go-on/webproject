@@ -2,6 +2,7 @@ package wsi
 
 import (
 	"database/sql"
+	"gopkg.in/go-on/builtin.v1"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -11,35 +12,36 @@ import (
 	"gopkg.in/metakeule/dbwrap.v2"
 )
 
-var fake, db = dbwrap.NewFake()
+var fake, DB = dbwrap.NewFake()
 var realDB *sql.DB
 
 func searchPersonFromDB(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
 	if limit == 0 {
 		limit = 30
 	}
-	return DBQuery(realDB, `SELECT 2 AS "Id", 'hiho' AS "Name" ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
+	return DBQuery(realDB, `SELECT 2 AS "Id", 'hiho' AS "Name", null AS "Notes" ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
 }
 
 func searchPeronsIdsNames(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
 	if limit == 0 {
 		limit = 20
 	}
-	return DBQuery(db, `SELECT "Id","Name" FROM person ORDER BY "Name" LIMIT $1 OFFSET $2`, limit, offset)
+	return DBQuery(DB, `SELECT "Id","Name" FROM person ORDER BY "Name" LIMIT $1 OFFSET $2`, limit, offset)
 }
 
 func searchPersonIds(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
 	if limit == 0 {
 		limit = 10
 	}
-	return DBQuery(db, `SELECT "Id" FROM person ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
+	return DBQuery(DB, `SELECT "Id" FROM person ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
 }
 
 type person struct {
-	Id   int
-	Name string
-	Age  int `json:",omitempty" sql:",omitempty"`
-	err  error
+	Id    int
+	Name  string
+	Age   int              `json:",omitempty" sql:",omitempty"`
+	Notes builtin.Stringer `json:",omitempty"` // optional
+	err   error
 }
 
 func newPersonMapper() interface{} {
@@ -69,7 +71,7 @@ func TestRealDB(t *testing.T) {
 	if pg_url == "" {
 		t.SkipNow()
 	}
-	u, err := pq.ParseURL(pg_url + "?sslmode=disable")
+	u, err := pq.ParseURL(pg_url)
 	if err != nil {
 		panic(err)
 	}

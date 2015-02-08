@@ -2,6 +2,7 @@ package wsi
 
 import (
 	"database/sql"
+	"gopkg.in/go-on/builtin.v1/db"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -102,7 +103,7 @@ func (wq Query) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // If any error happens before scanning, a http.StatusInternalServerError will be written to the ResponseWriter
 // and the first call to Next() fails. The error than can retrieved via the Error method of the scanner
 func QueryByRequest(w http.ResponseWriter, r *http.Request, fn QueryFunc) (scanner Scanner, err error) {
-	options := ScanQueryValuesX(r.URL.Query())
+	options := ScanQueryValues(r.URL.Query())
 	// options.Filter = map[string]string{}
 	/*
 		for key, _ := range r.URL.Query() {
@@ -125,7 +126,7 @@ func QueryByRequest(w http.ResponseWriter, r *http.Request, fn QueryFunc) (scann
 //   limit - if set - must be convertible to an int, defaults to maxLimit
 //   sort must be in the form "+col" or "-col" where "+col" results in ascending sort of the col and -col results in descending sorting.
 //        Multiple query values for sort resulting in mutliple sorts in the order of the values
-func ScanQueryValuesX(values url.Values) (options QueryOptions) {
+func ScanQueryValues(values url.Values) (options QueryOptions) {
 	options.Offset, _ = strconv.Atoi(values.Get("offset"))
 	options.Limit, _ = strconv.Atoi(values.Get("limit"))
 
@@ -144,13 +145,13 @@ func ScanQueryValuesX(values url.Values) (options QueryOptions) {
 
 // DBQuery returns a Scanner for the given query that allowes iteration over the returned rows from
 // the underlying sql query. The Scanner takes of closing the rows
-func DBQuery(db *sql.DB, query string, values ...interface{}) (sc Scanner, err error) {
+func DBQuery(d db.DB, query string, values ...interface{}) (sc Scanner, err error) {
 	var (
 		rows *sql.Rows
 		cols []string
 	)
 
-	rows, err = db.Query(query, values...)
+	rows, err = d.Query(query, values...)
 	if err != nil {
 		return
 	}
@@ -170,6 +171,7 @@ func DBQuery(db *sql.DB, query string, values ...interface{}) (sc Scanner, err e
 	return
 }
 
+/*
 // convertSorts `+Name` or `Name` to `"Name" ASC` and `-Name` to `"Name" DESC`
 func convertSortsX(in []string) (out []string) {
 	out = make([]string, len(in))
@@ -184,3 +186,4 @@ func convertSortsX(in []string) (out []string) {
 	}
 	return
 }
+*/
