@@ -12,7 +12,7 @@ gopkg.in/metakeule/backtrace.v1
 gopkg.in/metakeule/fmtdate.v1
 gopkg.in/metakeule/nil.v1
 gopkg.in/metakeule/dbwrap.v2
-gopkg.in/metakeule/pgsql.v5
+gopkg.in/metakeule/pgsql.v6
 gopkg.in/metakeule/nodouble.v1
 gopkg.in/metakeule/config.v1
 gopkg.in/metakeule/scaffold.v1
