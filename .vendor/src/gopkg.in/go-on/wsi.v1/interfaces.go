@@ -4,38 +4,27 @@ import (
 	"net/http"
 )
 
-/*
-// Mapper maps a column to a pointer of a field
-type Mapper interface {
-	// Maps must map an sql query column to a pointer of a field of the object.
-	// This method is used by WriteJSON in order to do a
-	// search query, write the results back to the provided fields that correspond to the columns
-	// and writing an array of json objects that are the serialization of the object.
-	// Therefor Map must be a pointer method and must set the column to field pointer.
-	//
-	// Example
-	//
-	// type Person struct {
-	//	  Id         int
-	//	  Name       string
-	// }
-	//
-	// func (p *Person) Map(column string) (fieldRef interface{}) {
-	//	switch column {
-	//  case "id":
-	//  	return &p.Id
-	//  case "name":
-	//  	return &p.Name
-	//  case "age":
-	//  	return &p.Age
-	//  default:
-	//  	panic("unknown column " + column)
-	//  }
-	// }
-	//
-	// Map(column string) (fieldRef interface{})
+// Scanner is a more comfortable scanner that works similar to sql.Rows but does not have to be closed.
+type Scanner interface {
+
+	// Next should return false if there are no rows left or if any error happened before
+	Next() bool
+
+	// Scan allows scanning by column name instead of column position
+	// If an error did happen, every successing call to Scan should return that error without doing any scanning
+	Scan(vals ...interface{}) error
+
+	// Columns returns the columns of the query
+	Columns() []string
+
+	// Error should return the first error that did happen
+	Error() error
 }
-*/
+
+// Validater is a fallback/default validater for POST, PUT and PATCH requests
+type Validater interface {
+	Validate() map[string]error
+}
 
 // POSTValidater validates data of POST requests
 type POSTValidater interface {
@@ -51,23 +40,6 @@ type PUTValidater interface {
 type PATCHValidater interface {
 	ValidatePATCH() map[string]error
 }
-
-// Validater is a fallback/default validater for POST, PUT and PATCH requests
-type Validater interface {
-	Validate() map[string]error
-}
-
-// QueryFunc is a function that returns a Scanner (with the help of the Query function) for the given
-// search parameters that are
-//   - orderBy strings, such as "name ASC" or "id DESC"
-//   - offset: number of skipped entries
-//   - limit: limit of returned entries
-//   - filter: any further filtering parameters
-// How the values of the filter are used is up to the function
-// type QueryFunc func(QueryOptions) (Scanner, error)
-
-// ExecFunc is a function that runs the sql and writes to the responsewriter
-// type ExecFunc func(map[string]interface{}, http.ResponseWriter)
 
 type StreamEncoder interface {
 	Encode(interface{}) error

@@ -42,5 +42,3 @@ func TestMapViaJSON(t *testing.T) {
 		t.Errorf("%#v should have length of 2", m)
 	}
 }
-
-// func MapViaJSON(v interface{}) (m map[string]interface{}, err error)

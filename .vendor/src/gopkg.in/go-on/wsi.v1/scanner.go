@@ -6,37 +6,8 @@ import (
 	"database/sql"
 )
 
-// Scanner is a more comfortable scanner that works similar to sql.Rows but does not have to be closed.
-type Scanner interface {
-
-	// Next should return false if there are no rows left or if any error happened before
-	Next() bool
-
-	// Scan allows scanning by column name instead of column position
-	// If an error did happen, every successing call to Scan should return that error without doing any scanning
-	Scan(vals ...interface{}) error
-
-	// ColNum returns the number of columns
-	// ColNum() int
-
-	// Column returns the column name for the given position
-	// Column(pos int) string
-
-	Columns() []string
-
-	// Error should return the first error that did happen
-	Error() error
-}
-
 // ScanToMapper scans the values from a scanner to a mapper
 func ScanToMapper(sc Scanner, m interface{}) error {
-	// colNum := sc.ColNum()
-	// vals := make([]interface{}, colNum)
-	/*
-		for i := 0; i < colNum; i++ {
-			vals[i] = m.Map(sc.Column(i))
-		}
-	*/
 	ptrs, err := ColumnPtrs(m, sc.Columns())
 	if err != nil {
 		return err
@@ -74,26 +45,16 @@ func (f *TestScanner) Next() bool {
 	return !f.stop
 }
 
-/*
-func (f *TestScanner) ColNum() int {
-	return len(f.cols)
-}
-*/
-
 func (f *TestScanner) Columns() []string {
 	return f.cols
 }
 
-/*
-func (f *TestScanner) Column(pos int) string {
-	return f.cols[pos]
-}
-*/
-
 // Scan allows scanning by column name instead of column position
 func (f *TestScanner) Scan(vals ...interface{}) error {
-
 	cols := f.Columns()
+	if f.err != nil {
+		return f.err
+	}
 	m := map[string]interface{}{}
 
 	for i, val := range vals {
@@ -127,28 +88,15 @@ type dbScanner struct {
 }
 
 // Error returns the first error that did happen
-func (sc *dbScanner) Error() error {
-	return sc.err
-}
+func (sc *dbScanner) Error() error { return sc.err }
 
-/*
-func (sc *dbScanner) ColNum() int {
-	cols, _ := sc.Rows.Columns()
-	return len(cols)
+func (sc *dbScanner) Columns() (cols []string) {
+	if sc.err != nil {
+		return
+	}
+	cols, sc.err = sc.Rows.Columns()
+	return
 }
-*/
-
-func (sc *dbScanner) Columns() []string {
-	cols, _ := sc.Rows.Columns()
-	return cols
-}
-
-/*
-func (sc *dbScanner) Column(pos int) string {
-	cols, _ := sc.Rows.Columns()
-	return cols[pos]
-}
-*/
 
 // Next returns false if there are no rows left or if any error happened before
 func (sc *dbScanner) Next() bool {
@@ -168,19 +116,8 @@ func (sc *dbScanner) Scan(vals ...interface{}) error {
 	if sc.err != nil {
 		return sc.err
 	}
-	/*
-		vals := make([]interface{}, len(sc.columns))
 
-		for colName, val := range targets {
-			i, ok := sc.columns[colName]
-			if !ok {
-				return errors.New("unknown column " + colName)
-			}
-			vals[i] = val
-		}
-	*/
-	wr := sqlnull.Wrap(sc.Rows)
-	sc.err = wr.Scan(vals...)
+	sc.err = sqlnull.Wrap(sc.Rows).Scan(vals...)
 	if sc.err != nil && !sc.closed {
 		sc.Rows.Close()
 		sc.closed = true

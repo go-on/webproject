@@ -13,7 +13,7 @@ import (
 )
 
 type Person struct {
-	Id   int
+	ID   int
 	Name string
 	Age  int `json:",omitempty" sql:",omitempty"`
 }
@@ -25,7 +25,7 @@ var newPerson wsi.RessourceFunc = func() interface{} { return &Person{} }
 // findPersonsFake fakes our query, for a realistic query, see findPersons
 // if any error happens, it must write to the response writer and return an error
 func findPersonsFake(limit, offset int, w http.ResponseWriter, r *http.Request) (wsi.Scanner, error) {
-	return wsi.NewTestQuery([]string{"Id", "Name"}, testData...), nil
+	return wsi.NewTestQuery([]string{"ID", "Name"}, testData...), nil
 }
 
 // creates a http.Handler based on findPersonsFake that writes the resulting persons as json
@@ -45,7 +45,7 @@ func findPersons(limit, offset int, w http.ResponseWriter, r *http.Request) (wsi
 
 	return wsi.DBQuery(
 		DB,
-		`SELECT "Id","Name" from person ORDER BY "Id" LIMIT $1 OFFSET $2`,
+		`SELECT "ID","Name" from person ORDER BY "ID" LIMIT $1 OFFSET $2`,
 		limit,
 		offset,
 	)
@@ -57,8 +57,8 @@ func findPersons(limit, offset int, w http.ResponseWriter, r *http.Request) (wsi
 // error handler may be called
 func createPerson(m map[string]interface{}, w http.ResponseWriter, r *http.Request) error {
 	// we fake a created response here
-	m["Id"] = 400
-	// res := map[string]interface{}{"Id": 400, "Name": m.Map("name")}
+	m["ID"] = 400
+	// res := map[string]interface{}{"ID": 400, "Name": m.Map("name")}
 	w.WriteHeader(http.StatusCreated)
 	wsi.ServeJSON(m, w)
 	return nil
@@ -81,17 +81,17 @@ func Example() {
 	fmt.Println(rec.Body.String())
 
 	// Output:
-	// [{"Id":12,"Name":"Adrian"}
-	// ,{"Id":24,"Name":"George"}
+	// [{"ID":12,"Name":"Adrian"}
+	// ,{"ID":24,"Name":"George"}
 	// ]
 	// -----
-	// {"Id":400,"Name":"Peter"}
+	// {"ID":400,"Name":"Peter"}
 	//
 }
 
 var testData = []map[string]wsi.Setter{
-	map[string]wsi.Setter{"Id": wsi.SetInt(12), "Name": wsi.SetString("Adrian")},
-	map[string]wsi.Setter{"Id": wsi.SetInt(24), "Name": wsi.SetString("George")},
+	map[string]wsi.Setter{"ID": wsi.SetInt(12), "Name": wsi.SetString("Adrian")},
+	map[string]wsi.Setter{"ID": wsi.SetInt(24), "Name": wsi.SetString("George")},
 }
 
 // an example error handler

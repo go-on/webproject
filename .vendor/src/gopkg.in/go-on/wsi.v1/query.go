@@ -18,10 +18,8 @@ type Query struct {
 }
 
 type QueryOptions struct {
-	// OrderBy []string
 	Limit  int
 	Offset int
-	// Filter map[string]string
 }
 
 func (wq Query) SetEncoder(e Encoder) Query {
@@ -67,21 +65,10 @@ func (wq Query) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	defer enc.Finish()
 
-	// colNum := scanner.ColNum()
-
 	for scanner.Next() {
 		mapper := wq.mapperFn()
 
 		err = ScanToMapper(scanner, mapper)
-		/*
-			cols := make([]interface{}, colNum)
-			for i := 0; i < colNum; i++ {
-				cols[i] = mapper.Map(scanner.Column(i))
-			}
-		*/
-		// m := map[string]interface{}{}
-		// mapper.MapColumns(m)
-		// err = scanner.Scan(cols...)
 
 		// we already wrote something to the body, so handle errors gracefully
 		if err != nil && wq.errorHandler != nil {
@@ -104,20 +91,6 @@ func (wq Query) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // and the first call to Next() fails. The error than can retrieved via the Error method of the scanner
 func QueryByRequest(w http.ResponseWriter, r *http.Request, fn QueryFunc) (scanner Scanner, err error) {
 	options := ScanQueryValues(r.URL.Query())
-	// options.Filter = map[string]string{}
-	/*
-		for key, _ := range r.URL.Query() {
-			options.Filter[key] = r.URL.Query().Get(key)
-		}
-	*/
-	/*
-		scanner, err = fn(w, r, options)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			scanner = errScanner{err}
-		}
-		return
-	*/
 	return fn(options.Limit, options.Offset, w, r)
 }
 
@@ -139,7 +112,6 @@ func ScanQueryValues(values url.Values) (options QueryOptions) {
 		options.Offset = 0
 	}
 
-	// options.OrderBy = convertSortsX(values["sort"])
 	return
 }
 
@@ -170,20 +142,3 @@ func DBQuery(d db.DB, query string, values ...interface{}) (sc Scanner, err erro
 	sc = &dbScanner{columns: columns, Rows: rows}
 	return
 }
-
-/*
-// convertSorts `+Name` or `Name` to `"Name" ASC` and `-Name` to `"Name" DESC`
-func convertSortsX(in []string) (out []string) {
-	out = make([]string, len(in))
-
-	for i, s := range in {
-		switch s[0] {
-		case '-':
-			out[i] = `"` + s[1:] + `"` + " DESC"
-		default:
-			out[i] = `"` + s + `"` + " ASC"
-		}
-	}
-	return
-}
-*/
