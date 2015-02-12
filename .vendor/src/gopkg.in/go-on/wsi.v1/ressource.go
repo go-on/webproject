@@ -13,43 +13,37 @@ type QueryFunc func(limit, offset int, w http.ResponseWriter, r *http.Request) (
 // some happened, so that the error may be passed to the general error handler
 type ExecFunc func(map[string]interface{}, http.ResponseWriter, *http.Request) error
 
-type RessourceFunc func() interface{}
-
-func (r RessourceFunc) Exec(e ExecFunc) Exec {
-	if e == nil {
-		panic("ExecFunc can't be nil")
-	}
-	return Exec{mapperFn: r, fn: e, dec: JSONDecoder}
-}
-
-func (r RessourceFunc) Query(q QueryFunc) Query {
-	if q == nil {
-		panic("QueryFunc can't be nil")
-	}
-	return Query{encFn: NewJSONStreamer, mapperFn: r, fn: q}
-}
-
 type Ressource struct {
-	RessourceFunc
-	ErrorHandler func(r *http.Request, err error)
+	RessourceFunc func() interface{}
+	ErrorHandler  func(r *http.Request, err error)
 }
 
 func (rs Ressource) ServeQuery(q QueryFunc, w http.ResponseWriter, r *http.Request) {
-	qq := rs.RessourceFunc.Query(q)
-	if rs.ErrorHandler != nil {
-		qq = qq.SetErrorCallback(rs.ErrorHandler)
-	}
-	qq.ServeHTTP(w, r)
+	rs.Query(q).ServeHTTP(w, r)
 }
 
 func (rs Ressource) ServeExec(e ExecFunc, w http.ResponseWriter, r *http.Request) {
-	ee := rs.RessourceFunc.Exec(e)
-	if rs.ErrorHandler != nil {
-		ee = ee.SetErrorCallback(rs.ErrorHandler)
-	}
-	ee.ServeHTTP(w, r)
+	rs.Exec(e).ServeHTTP(w, r)
 }
 
-func NewRessource(fn func() interface{}) Ressource {
-	return Ressource{RessourceFunc: fn}
+func (rs Ressource) Exec(e ExecFunc) Exec {
+	if e == nil {
+		panic("ExecFunc can't be nil")
+	}
+	ee := Exec{mapperFn: rs.RessourceFunc, fn: e, dec: JSONDecoder}
+	if rs.ErrorHandler != nil {
+		ee.SetErrorCallback(rs.ErrorHandler)
+	}
+	return ee
+}
+
+func (rs Ressource) Query(q QueryFunc) Query {
+	if q == nil {
+		panic("QueryFunc can't be nil")
+	}
+	qq := Query{encFn: NewJSONStreamer, mapperFn: rs.RessourceFunc, fn: q}
+	if rs.ErrorHandler != nil {
+		qq.SetErrorCallback(rs.ErrorHandler)
+	}
+	return qq
 }

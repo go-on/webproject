@@ -19,8 +19,8 @@ type Person struct {
 }
 
 // newPerson is a function that creates a new person.
-// we need this as wsi.Ressource to generate the http.Handlers
-var newPerson wsi.RessourceFunc = func() interface{} { return &Person{} }
+// we need it to generate the http.Handlers
+func newPerson() interface{} { return &Person{} }
 
 // findPersonsFake fakes our query, for a realistic query, see findPersons
 // if any error happens, it must write to the response writer and return an error
@@ -31,7 +31,7 @@ func findPersonsFake(limit, offset int, w http.ResponseWriter, r *http.Request) 
 // creates a http.Handler based on findPersonsFake that writes the resulting persons as json
 // we are using the fake query here to avoid the need for a database, you may replace findPersonsFake
 // with findPersons if you have a real database connection
-var findHandler = newPerson.Query(findPersonsFake).SetErrorCallback(printErr)
+var findHandler = wsi.Ressource{newPerson, printErr}.Query(findPersonsFake)
 
 var DB *sql.DB
 
@@ -65,7 +65,7 @@ func createPerson(m map[string]interface{}, w http.ResponseWriter, r *http.Reque
 }
 
 // creates a http.Handler based on createPerson that load persons as json
-var addHandler = newPerson.Exec(createPerson).SetErrorCallback(printErr)
+var addHandler = wsi.Ressource{newPerson, printErr}.Exec(createPerson)
 
 func Example() {
 	rec := httptest.NewRecorder()

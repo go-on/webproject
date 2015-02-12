@@ -8,55 +8,40 @@ integrates web requests with database/sql (golang)
 ```go
 
 import (
+    "database/sql"
     "gopkg.in/go-on/wsi.v1"
     "net/http"
+    "log"
 )
 
 type Person struct {
-    Id   int
-    Name string
-    Age  int `json:",omitempty"`
+    ID   int `sql:"id"`
+    Name string `sql:"name"`
+    Age  int `json:",omitempty" sql:"-"`
 }
 
-// maps the column to the pointer of a field; must be a pointer method
-func (p *Person) Map(column string) interface{} {
-    switch column {
-    case "id":
-        return &p.Id
-    case "name":
-        return &p.Name
-    case "age":
-        return &p.Age
-    default:
-        panic("unknown column " + column)
-    }
+func newPerson() interface{} { 
+    return &Person{} 
 }
 
-var newPerson wsi.RessourceFunc = func() wsi.Mapper { return &Person{} }
+func logErr(r *http.Request, err error) {
+    log.Printf("Error in route GET %s: %T %s\n", r.URL.Path, err, err.Error())
+}
 
-func findPersons(opts wsi.QueryOptions, w http.ResponseWriter, r *http.Request) (wsi.Scanner, error) {
-    sc, err := wsi.DBQuery(
-        DB, 
-        "SELECT id,name from person ORDER BY $1 LIMIT $2 OFFSET $3", 
-        strings.Join(opts.OrderBy, ","), 
-        opts.Limit, 
-        opts.Offset,
+var db *sql.DB // TODO setup the db connection and create person table
+
+func findPersons(limit, offset int, w http.ResponseWriter, r *http.Request) (wsi.Scanner, error) {
+    return wsi.DBQuery(
+        db, 
+        `SELECT id,name from person ORDER BY name ASC LIMIT $1 OFFSET $2`, 
+        limit, 
+        offset,
     )
-    // handle error writes on your own
-    if err != nil {
-        w.WriteHeader(http.StatusInternalServerError)
-        w.Write([]byte(`Database error. Contact the administrator.`))
-    }
-    return sc, err
 }
-
 
 func main() {
-    // you might set an error handler as well, see the api docs
-    servePersons := newPerson.Query(findPersons)
-
-    http.Handle("/person/", servePersons)
-    // will serve: [{"Id":12,"Name":"Adrian"},{"Id":24,"Name":"George"},...]
+    http.Handle("/person/", wsi.Ressource{newPerson,logErr}.Query(findPersons))
+    // will serve: [{"ID":12,"Name":"Adrian"},{"ID":24,"Name":"George"},...]
 
     http.ListenAndServe(":8080",nil)    
 }

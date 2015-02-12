@@ -8,7 +8,7 @@ import (
 
 // Exec is a http.Handler that execs a ExecFunc
 type Exec struct {
-	mapperFn     RessourceFunc
+	mapperFn     func() interface{}
 	fn           ExecFunc
 	errorHandler func(*http.Request, error)
 	dec          RequestDecoder
