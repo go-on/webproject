@@ -32,7 +32,7 @@ func (rs Ressource) Exec(e ExecFunc) Exec {
 	}
 	ee := Exec{mapperFn: rs.RessourceFunc, fn: e, dec: JSONDecoder}
 	if rs.ErrorHandler != nil {
-		ee.SetErrorCallback(rs.ErrorHandler)
+		ee = ee.SetErrorCallback(rs.ErrorHandler)
 	}
 	return ee
 }
@@ -43,7 +43,7 @@ func (rs Ressource) Query(q QueryFunc) Query {
 	}
 	qq := Query{encFn: NewJSONStreamer, mapperFn: rs.RessourceFunc, fn: q}
 	if rs.ErrorHandler != nil {
-		qq.SetErrorCallback(rs.ErrorHandler)
+		qq = qq.SetErrorCallback(rs.ErrorHandler)
 	}
 	return qq
 }

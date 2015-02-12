@@ -35,6 +35,12 @@ func searchPersonIds(limit, offset int, w http.ResponseWriter, r *http.Request) 
 	}
 	return DBQuery(DB, `SELECT "Id" FROM person ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
 }
+func searchPersonErr(limit, offset int, w http.ResponseWriter, r *http.Request) (Scanner, error) {
+	if limit == 0 {
+		limit = 30
+	}
+	return DBQuery(realDB, `SELECT 2 AS "Id, 'hiho' AS "Name", null AS "Notes" ORDER BY "Id" LIMIT $1 OFFSET $2`, limit, offset)
+}
 
 type person struct {
 	Id    int
@@ -58,6 +64,8 @@ func (p *person) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fn = searchPersonIds
 	case "/real":
 		fn = searchPersonFromDB
+	case "/err":
+		fn = searchPersonErr
 	}
 
 	Ressource{newPersonMapper, errHandler}.ServeQuery(fn, w, r)
@@ -105,6 +113,33 @@ func TestRealDB(t *testing.T) {
 
 	if got != expected {
 		t.Errorf("Content-Type: %#v, expected: %#v", got, expected)
+	}
+
+}
+
+func TestRealDBErr(t *testing.T) {
+	pg_url := os.Getenv("PG_URL")
+	if pg_url == "" {
+		t.SkipNow()
+	}
+	u, err := pq.ParseURL(pg_url)
+	if err != nil {
+		panic(err)
+	}
+	realDB, err = sql.Open("postgres", u)
+	if err != nil {
+		panic(err)
+	}
+	defer realDB.Close()
+	p := &person{}
+
+	rec := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/err", nil)
+
+	p.ServeHTTP(rec, req)
+
+	if p.err == nil {
+		t.Errorf("expected err, got nil")
 	}
 
 }
