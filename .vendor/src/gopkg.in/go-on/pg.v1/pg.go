@@ -24,7 +24,7 @@ func randomString(length int, alphabet string) string {
 	return string(result)
 }
 
-var escapeStr = "$__pg-esc_" + randomString(5, "_-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") + "_pg-esc__$"
+var escapeStr = "$__pg__esc_" + randomString(5, "_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") + "_pg__esc__$"
 
 func Escape(value interface{}) (out string) {
 	out = strings.Replace(fmt.Sprintf("%v", value), escapeStr, "", -1)
