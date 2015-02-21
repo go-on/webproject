@@ -8,6 +8,7 @@ gopkg.in/go-on/wrap.v2
 gopkg.in/go-on/wrap-contrib.v2
 gopkg.in/go-on/wrap-contrib-testing.v2
 gopkg.in/go-on/wsi.v1
+gopkg.in/go-on/pg.v1
 gopkg.in/metakeule/backtrace.v1
 gopkg.in/metakeule/fmtdate.v1
 gopkg.in/metakeule/nil.v1
