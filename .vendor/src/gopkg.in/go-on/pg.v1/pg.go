@@ -49,14 +49,17 @@ func Val(v interface{}) *Value {
 type Field string
 
 func (f Field) String() string { return `"` + string(f) + `"` }
+func (f Field) Name() string   { return string(f) }
 
 type Table string
 
 func (t Table) String() string { return `"` + string(t) + `"` }
+func (t Table) Name() string   { return string(t) }
 
 type Schema string
 
 func (s Schema) String() string { return `"` + string(s) + `"` }
+func (s Schema) Name() string   { return string(s) }
 
 type DB struct{ db.DB }
 

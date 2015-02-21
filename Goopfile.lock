@@ -11,7 +11,7 @@ gopkg.in/go-on/manners.v1 #d86c2a5e749b4cfabf588be80a5c31709fecb22a
 gopkg.in/go-on/mannersagain.v1 #dea8fca0792d8ffee3d9284c4ceb88d26f5ff5eb
 gopkg.in/go-on/method.v1 #25dc14148b5e431a59ef8b17b2abb6f6d41193bb
 gopkg.in/go-on/nosurf.v1 #4344e0f7be029daa4a4786e356890bddad7896bb
-gopkg.in/go-on/pg.v1 #d37b3b5507b82bf86d1896ba96de6f10eb410f9d
+gopkg.in/go-on/pg.v1 #47f103a4338f1e0a3675b63d60c6f4d8b80f144f
 gopkg.in/go-on/pq.v2 #0d009c09e638b2bf41f73079f098b5a6a9200a3c
 gopkg.in/go-on/queue.v2 #c535d4535fc36b3918d21329cba768e5fe536ee9
 gopkg.in/go-on/router.v2 #c2016981a28e77cb7751f3160c07514ba7b7c759
