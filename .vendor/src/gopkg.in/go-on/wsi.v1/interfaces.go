@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-// Scanner is a more comfortable scanner that works similar to sql.Rows but does not have to be closed.
+// Scanner is a more comfortable scanner that works similar to sql.Rows
 type Scanner interface {
 
 	// Next should return false if there are no rows left or if any error happened before
@@ -19,6 +19,9 @@ type Scanner interface {
 
 	// Error should return the first error that did happen
 	Error() error
+
+	// should close the scan
+	Close() error
 }
 
 // Validater is a fallback/default validater for POST, PUT and PATCH requests

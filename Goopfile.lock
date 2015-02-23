@@ -20,7 +20,7 @@ gopkg.in/go-on/sessions.v1 #00a2d6372d7b762e0e4596db9cd03ac6c54a46a0
 gopkg.in/go-on/wrap-contrib-testing.v2 #ecd2d5e2f6adbb9d4379eea88b520f33ed7c5ff2
 gopkg.in/go-on/wrap-contrib.v2 #69b562fa8fe94b7c3e5d8b6d258038ec20906fff
 gopkg.in/go-on/wrap.v2 #544168af414c702f648d14fc90cd206b3e750c00
-gopkg.in/go-on/wsi.v1 #a8fab721858a9d5afcf8dcfa85d8156a81eabaf3
+gopkg.in/go-on/wsi.v1 #f6cc9c23ae9a26cce04bfb305659541e39a0475b
 gopkg.in/gomail.v1 #6805982221134fb0e02b6316dd094341e7e909c3
 gopkg.in/metakeule/backtrace.v1 #520aa0f37f5fee5d4cbf5971aec66e73b62a8e66
 gopkg.in/metakeule/config.v1 #07df82cf151dbc7f0bd363a6db771c471c7bd779

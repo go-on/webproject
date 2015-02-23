@@ -41,6 +41,7 @@ func (wq Query) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+	defer scanner.Close()
 
 	// we could not construct the scanner properly. fail early.
 	err = scanner.Error()

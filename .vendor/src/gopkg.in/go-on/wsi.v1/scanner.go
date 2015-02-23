@@ -33,6 +33,10 @@ type TestScanner struct {
 	cols []string
 }
 
+func (f *TestScanner) Close() error {
+	return nil
+}
+
 // Error returns the first error that did happen
 func (f *TestScanner) Error() error { return f.err }
 
@@ -77,6 +81,7 @@ type errScanner struct{ err error }
 func (e errScanner) Error() error                      { return e.err }
 func (e errScanner) Next() bool                        { return false }
 func (e errScanner) Scan(map[string]interface{}) error { return e.err }
+func (e errScanner) Close() error                      { return nil }
 
 // dbScanner wraps sql.Rows to autoclose the rows and allow scanning by a map of fields to targets
 // so that the call is independant from the position of the returned columns
@@ -123,4 +128,11 @@ func (sc *dbScanner) Scan(vals ...interface{}) error {
 		sc.closed = true
 	}
 	return sc.err
+}
+
+func (sc *dbScanner) Close() error {
+	if sc.Rows != nil && !sc.closed {
+		return sc.Rows.Close()
+	}
+	return nil
 }
